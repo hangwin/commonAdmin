@@ -1,9 +1,9 @@
 {
-  "compilerOptions": {
-    "composite": true, // 对于被引用的项目必须配置的属性
-    "module": "ESNext",
-    "moduleResolution": "Node", // 使用node的模块解析策略
-    "allowSyntheticDefaultImports": true
-  },
-  "include": ["vite.config.ts"] // 说明这个ts配置是专门针对vite.config.ts的
+	"compilerOptions": {
+		"composite": true, // 对于被引用的项目必须配置的属性
+		"module": "ESNext",
+		"moduleResolution": "Node", // 使用node的模块解析策略
+		"allowSyntheticDefaultImports": true
+	},
+	"include": ["vite.config.ts"] // 说明这个ts配置是专门针对vite.config.ts的
 }

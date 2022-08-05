@@ -7,9 +7,9 @@
 // 下面的意思是是，全局定义一个模块，当import xxx from 'xx.vue';的方式引入模板文件的时候，编译器不会报错
 // 且引入的类型是DefineComponent类型
 declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
-  export default component
+	import type { DefineComponent } from 'vue';
+	const component: DefineComponent<{}, {}, any>;
+	export default component;
 }
 
 // 类型声明文件具体怎么写：可参考https://ts.xcatliu.com/basics/declaration-files.html#npm-包
