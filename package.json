@@ -9,7 +9,8 @@
 		"prettier": "npx prettier --write ./src/**/*.{vue,ts,tsx,js,jsx,css,less,scss,json,md}",
 		"lint": "npx eslint ./src --ext .vue,.ts,.tsx",
 		"lint:fix": "npx eslint ./src --ext .vue,.ts,.tsx --fix",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"lint:lint-staged": "lint-staged"
 	},
 	"dependencies": {
 		"vue": "^3.2.37"
@@ -30,5 +31,17 @@
 		"vite": "^3.0.0",
 		"vue-eslint-parser": "^9.0.3",
 		"vue-tsc": "^0.38.4"
+	},
+	"lint-staged": {
+		"*.{vue,js,jsx,ts,tsx}": [
+			"prettier --write",
+			"eslint"
+		],
+		"package.json": [
+			"prettier --write"
+		],
+		"*.md": [
+			"prettier --write"
+		]
 	}
 }
