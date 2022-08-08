@@ -6,16 +6,25 @@
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
-		"prettier": "npx prettier --write ."
+		"prettier": "npx prettier --write ./src/**/*.{vue,ts,tsx,js,jsx,css,less,scss,json,md}",
+		"lint": "npx eslint ./src --ext .vue,.ts,.tsx",
+		"lint:fix": "npx eslint ./src --ext .vue,.ts,.tsx --fix"
 	},
 	"dependencies": {
 		"vue": "^3.2.37"
 	},
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.32.0",
+		"@typescript-eslint/parser": "^5.32.0",
 		"@vitejs/plugin-vue": "^3.0.0",
+		"eslint": "^8.21.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-vue": "^9.3.0",
 		"prettier": "^2.7.1",
 		"typescript": "^4.6.4",
 		"vite": "^3.0.0",
+		"vue-eslint-parser": "^9.0.3",
 		"vue-tsc": "^0.38.4"
 	}
 }

@@ -3,5 +3,4 @@
 pnpm-lock.yaml
 **/*.svg
 **/*.sh
-
 /public/*
