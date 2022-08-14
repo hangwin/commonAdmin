@@ -16,9 +16,12 @@
 		"vue": "^3.2.37"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "^17.0.3",
+		"@commitlint/config-conventional": "^17.0.3",
 		"@typescript-eslint/eslint-plugin": "^5.32.0",
 		"@typescript-eslint/parser": "^5.32.0",
 		"@vitejs/plugin-vue": "^3.0.0",
+		"cz-customizable": "^6.9.1",
 		"eslint": "^8.21.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
@@ -59,5 +62,10 @@
 		"*.md": [
 			"prettier --write"
 		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-customizable"
+		}
 	}
 }
