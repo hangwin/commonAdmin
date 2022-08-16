@@ -2,13 +2,13 @@
 import { ref } from 'vue';
 
 defineProps<{ msg: string }>();
-
 const count = ref(0);
+const envMsg = ref(`${import.meta.env.VITE_BUILD_CON}-${import.meta.env.VITE_API_PATH}`);
 </script>
 
 <template>
 	<h1>11{{ msg }}</h1>
-
+	<h1>{{ envMsg }}</h1>
 	<div class="card">
 		<button type="button" @click="count++">count is {{ count }}</button>
 		<p>
