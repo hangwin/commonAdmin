@@ -11,6 +11,7 @@ const resolvePath = (path: string) => {
 export default defineConfig(({ mode }) => {
 	// 项目根路径
 	const root = process.cwd();
+	console.log('mode', mode);
 	const { VITE_PUBLIC_PATH } = loadEnv(mode, root);
 	return {
 		base: VITE_PUBLIC_PATH,
