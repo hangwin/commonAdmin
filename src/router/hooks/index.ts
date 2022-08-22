@@ -3,7 +3,6 @@ import type { Router } from 'vue-router';
 export const setRouteHooks = (router: Router) => {
 	setGlobalGard(router);
 };
-
 // 设置全局路由守卫
 // 在这里可以做一些事情：如取消页面请求，全局loading等
 const setGlobalGard = (router: Router) => {
