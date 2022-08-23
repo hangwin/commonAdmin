@@ -17,5 +17,7 @@ export const useUserStore = defineStore('user', {
 			return `${this.username} 666`;
 		},
 	},
-	persist: true,
+	persist: {
+		paths: ['job'],
+	},
 });

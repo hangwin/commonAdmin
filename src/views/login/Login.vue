@@ -1,5 +1,5 @@
 <template>
-	<div> 登录页 </div>
+	<div class="text-5xl text-pink-600"> 登录页 </div>
 	<br />
 	<div> username: {{ username }} getUsername: {{ '' }} </div>
 	<button

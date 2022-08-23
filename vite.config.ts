@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import windicss from 'vite-plugin-windicss';
 import { resolve } from 'path';
 const resolvePath = (path: string) => {
 	// 返回相对当前项目根目录下的路径
@@ -16,7 +17,7 @@ export default defineConfig(({ mode }) => {
 	const { VITE_PUBLIC_PATH } = loadEnv(mode, root);
 	return {
 		base: VITE_PUBLIC_PATH,
-		plugins: [vue(), vueJsx()],
+		plugins: [vue(), vueJsx(), windicss()],
 		resolve: {
 			alias: [
 				// import xxx from '@/path' -> import xxx from 'src/path'
