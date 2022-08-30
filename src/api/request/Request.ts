@@ -157,8 +157,8 @@ export default class Request {
 			}
 			this.axiosInstance
 				.request<T>(config)
-				.then((res) => {
-					resolve(res.data);
+				.then((res: any) => {
+					resolve(res);
 				})
 				.catch((error) => {
 					reject(error);

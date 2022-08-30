@@ -27,7 +27,12 @@
 				</div>
 			</el-form-item>
 			<el-form-item>
-				<el-button class="w-full" color="#605BFF" size="large" @click="login"
+				<el-button
+					class="w-full"
+					color="#605BFF"
+					size="large"
+					:loading="isLoading"
+					@click="login"
 					>登 录</el-button
 				>
 			</el-form-item>
@@ -52,17 +57,31 @@ import { ElButton, ElDivider, ElForm, ElFormItem, ElInput, ElCheckbox } from 'el
 import { SvgIcon } from '@/components/SvgIcon';
 import { ref } from 'vue';
 import { useFormRules, useFormValid } from './useLogin';
+import { useUserStore } from '@/store/modules/user';
 const userInfo = ref({
-	account: '',
-	password: '',
+	account: 'common',
+	password: 'common',
 	isRememberMe: false,
 });
 const formRef = ref(null);
 const { formRules } = useFormRules();
 const { validateForm } = useFormValid(formRef);
+const userStore = useUserStore();
+const isLoading = ref(false);
 const login = async () => {
-	if (await validateForm()) {
-		console.log('login submit');
+	try {
+		isLoading.value = true;
+		if (await validateForm()) {
+			console.log('login submit', userInfo.value);
+			await userStore.login({
+				uid: userInfo.value.account,
+				password: userInfo.value.password,
+			});
+		}
+	} catch (error) {
+		console.log('login error', error);
+	} finally {
+		isLoading.value = false;
 	}
 };
 </script>

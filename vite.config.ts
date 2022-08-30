@@ -67,7 +67,8 @@ export default defineConfig(({ mode }) => {
 					// 支持代理websocket
 					ws: true,
 					// 路径重写 相当于把api/去掉
-					rewrite: (path) => path.replace(new RegExp(`^/api`), 'm1/716135-0-default/'),
+					rewrite: (path) => path.replace(new RegExp(`^/api`), '/m1/1498345-0-default'),
+					// secure: false,
 				},
 			},
 		},

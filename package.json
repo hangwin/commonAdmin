@@ -3,7 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"scripts": {
-		"dev": "vite --mode dev",
+		"dev": "vite --debug --mode dev",
 		"build": "vue-tsc --noEmit && vite build --mode prod",
 		"preview": "vite preview",
 		"prettier": "npx prettier --write ./src/**/*.{vue,ts,tsx,js,jsx,css,less,scss,json,md}",

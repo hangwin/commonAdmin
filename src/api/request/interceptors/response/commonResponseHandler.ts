@@ -18,11 +18,12 @@ export const commonResponseHandler = (
 	if (!resp.data) {
 		throw new Error('请求错误，请重试');
 	}
-	const { code, data, errMsg } = resp.data;
+	const { code, data, errmsg } = resp.data;
 	// 业务成功状态码
 	if (code === ResponseResultCode.SUCCESS) {
+		console.log('data', data);
 		return data;
 	}
 	// 业务失败处理
-	throw new Error(errMsg || '系统繁忙');
+	throw new Error(errmsg || '系统繁忙');
 };

@@ -9,8 +9,10 @@ export enum LOGIN_ACTION {
 const loginAction = ref(LOGIN_ACTION.PASSWORD_LOGIN);
 const checkAccount = (rule: any, value: any, callback: any) => {
 	if (!value) {
-		callback(new Error('请输入用户名'));
+		callback('请输入用户名');
+		return;
 	}
+	callback();
 };
 export const useFormValid = (formRef: Ref<any>) => {
 	const validateForm = async () => {
