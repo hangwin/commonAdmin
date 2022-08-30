@@ -19,7 +19,7 @@ const homeRoot: RouteRecordRaw = {
 const loginRoute: RouteRecordRaw = {
 	path: '/login',
 	name: LOGIN.LOGIN,
-	component: () => import('@/views/login/Login.vue'),
+	component: () => import('@/views/login/index.vue'),
 	meta: {
 		title: '登录',
 	},

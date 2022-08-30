@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import windicss from 'vite-plugin-windicss';
 import ElementPlus from 'unplugin-element-plus/vite';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import { resolve } from 'path';
 const resolvePath = (path: string) => {
 	// 返回相对当前项目根目录下的路径
@@ -18,7 +19,16 @@ export default defineConfig(({ mode }) => {
 	const { VITE_PUBLIC_PATH } = loadEnv(mode, root);
 	return {
 		base: VITE_PUBLIC_PATH,
-		plugins: [vue(), vueJsx(), windicss(), ElementPlus()],
+		plugins: [
+			vue(),
+			vueJsx(),
+			windicss(),
+			ElementPlus(),
+			createSvgIconsPlugin({
+				iconDirs: [resolvePath('src/assets/icons')],
+				symbolId: 'icon-[dir]-[name]',
+			}),
+		],
 		resolve: {
 			alias: [
 				// import xxx from '@/path' -> import xxx from 'src/path'

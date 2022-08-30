@@ -17,6 +17,7 @@ module.exports = {
 	rules: {
 		indentation: 'tab',
 		// 'order/order': ['custom-properties', 'declarations'],
+		'selector-class-pattern': null,
 	},
 	overrides: [
 		// 上面的extends里的stylelint-config-recommended-vue已经帮我们指定了vue文件的解释器了，所以下面的也可以注释掉了
