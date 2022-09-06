@@ -111,6 +111,6 @@ export const getColorVariables2 = (theme: 'light' | 'dark' = 'light', primaryCol
 
 		'--h-fill-form-bg': isDark ? baseColor2.white : baseColor2.black,
 
-		'--h-fill-input-bg': colors.bg[5],
+		'--h-fill-input-bg': isDark ? baseColor2.gray[0] : baseColor2.gray[10],
 	};
 };
