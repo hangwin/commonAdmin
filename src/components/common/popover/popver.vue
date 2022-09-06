@@ -40,11 +40,15 @@ const props = defineProps({
 	},
 });
 const visiable = ref(false);
+let timer: any = null;
 const showContent = () => {
+	clearTimeout(timer);
 	visiable.value = true;
 };
 const hideContent = () => {
-	visiable.value = false;
+	timer = setTimeout(() => {
+		visiable.value = false;
+	}, 300);
 };
 const hoverContent = ref(null);
 const mainContent = ref(null);
@@ -68,29 +72,26 @@ watch(visiable, (newVal) => {
 	nextTick(() => {
 		const { width, height } = getElementSize(mainContent.value as any);
 		const { width: w, height: h } = getElementSize(hoverContent.value as any);
-		console.log(width, height, w, h);
-		hoverPosition.value.top = height + 'px';
-		hoverPosition.value.left = `${-w}px`;
-		// switch (props.position) {
-		// 	case 'top-left':
-		// 		hoverPosition.value.left = -w + 'px';
-		// 		hoverPosition.value.top = -h - height + 'px';
-		// 		return;
-		// 	case 'bottom-left':
-		// 		hoverPosition.value.left = -w + 'px';
-		// 		hoverPosition.value.top = 0 + 'px';
-		// 		return;
-		// 	case 'top-right':
-		// 		hoverPosition.value.left = w + 'px';
-		// 		hoverPosition.value.top = -height + -h + 'px';
-		// 		return;
-		// 	case 'bottom-right':
-		// 		hoverPosition.value.left = w + 'px';
-		// 		hoverPosition.value.top = 0 + 'px';
-		// 		return;
-		// 	default:
-		// 		return;
-		// }
+		switch (props.position) {
+			case 'top-left':
+				hoverPosition.value.top = `${-h}px`;
+				hoverPosition.value.left = `${-w}px`;
+				return;
+			case 'bottom-left':
+				hoverPosition.value.top = `${height}px`;
+				hoverPosition.value.left = `${-w}px`;
+				return;
+			case 'top-right':
+				hoverPosition.value.top = `${-h}px`;
+				hoverPosition.value.left = `${width}px`;
+				return;
+			case 'bottom-right':
+				hoverPosition.value.top = `${height}px`;
+				hoverPosition.value.left = `${width}px`;
+				return;
+			default:
+				return;
+		}
 	});
 });
 </script>
