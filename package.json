@@ -3,7 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"scripts": {
-		"dev": "vite --debug --mode dev",
+		"dev": "vite --mode dev",
 		"build": "vue-tsc --noEmit && vite build --mode prod",
 		"preview": "vite preview",
 		"prettier": "npx prettier --write ./src/**/*.{vue,ts,tsx,js,jsx,css,less,scss,json,md}",
@@ -13,7 +13,9 @@
 		"lint:lint-staged": "lint-staged"
 	},
 	"dependencies": {
+		"@ant-design/colors": "^6.0.0",
 		"axios": "^0.27.2",
+		"css-vars-ponyfill": "^2.4.8",
 		"element-plus": "^2.2.14",
 		"lodash-es": "^4.17.21",
 		"pinia": "^2.0.20",

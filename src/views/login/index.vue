@@ -1,21 +1,24 @@
 <template>
 	<div class="login relative w-full h-full full-bg">
 		<!-- <div class="xl:hidden">logo 小尺寸才展示</div> -->
-		<div class="absolute right-4 top-4 z-50"> toolbar </div>
-		<div class="relative flex h-full w-full <lg:bg-[#293146]">
+		<div class="absolute right-4 top-4 z-50"><AppDarkMode /></div>
+		<!--  <lg:bg-[#293146] -->
+		<div class="relative flex h-full w-full <lg:bg-$h-fill-mdsize-bg">
 			<!-- flex布局 with:100% height:100% 大尺寸时 width:50% -->
 			<div
 				class="flex w-full h-full <sm:(mx-auto max-w-full) <md:max-w-4/5 <lg:(max-w-1/2 mx-auto) lg:(h-auto py-0 my-0 w-4/12 max-w-420px) min-w-350px"
 			>
 				<div
-					class="form relative w-full px-12 bg-white <sm:h-full <lg:(my-auto rounded-lg shadow-md)"
+					class="form relative w-full px-12 bg-$h-fill-form-bg <sm:h-full <lg:(my-auto rounded-lg shadow-md)"
 				>
 					<img
 						src="@/assets/newlogo.svg"
 						alt="CommonAdmin"
 						class="w-92px h-92px mx-auto mt-120px <sm:(mt-20 block) <lg:hidden"
 					/>
-					<div class="text-center mx-auto mt-30px text-gray-800 text-xl"> 登 录 </div>
+					<div class="text-center mx-auto mt-30px text-$h-text-color text-xl">
+						登 录
+					</div>
 					<div class="mt-30px">
 						<PasswordLogin />
 					</div>
@@ -38,9 +41,10 @@
 </template>
 <script lang="ts" setup>
 import PasswordLogin from './PasswordLogin.vue';
+import AppDarkMode from '@/components/common/AppDarkMode/AppDarkMode.vue';
 </script>
 <style lang="less" scoped>
 .full-bg {
-	background-color: #fafafa;
+	background-color: var(--h-fill-bg);
 }
 </style>
