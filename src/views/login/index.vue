@@ -1,5 +1,5 @@
 <template>
-	<div class="login relative w-full h-full full-bg">
+	<div class="login relative w-full h-full full-bg duration-300">
 		<!-- <div class="xl:hidden">logo 小尺寸才展示</div> -->
 		<div class="absolute right-4 top-4 z-50"><AppDarkMode /></div>
 		<!--  <lg:bg-[#293146] -->
@@ -9,7 +9,7 @@
 				class="flex w-full h-full <sm:(mx-auto max-w-full) <md:max-w-4/5 <lg:(max-w-1/2 mx-auto) lg:(h-auto py-0 my-0 w-4/12 max-w-420px) min-w-350px"
 			>
 				<div
-					class="form relative w-full px-12 bg-$h-fill-form-bg <sm:h-full <lg:(my-auto rounded-lg shadow-md)"
+					class="form relative w-full px-12 bg-$h-fill-form-bg <sm:h-full <lg:(my-auto rounded-lg shadow-md) duration-300"
 				>
 					<img
 						src="@/assets/newlogo.svg"

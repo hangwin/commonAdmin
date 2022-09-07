@@ -1,7 +1,9 @@
+import { ThemeMode } from '@/constants/uiConfigConstants';
+import type { ThemeType } from '@/types/theme';
 import { lightColors, darkColors, lightColors2, darkColors2, baseColor2 } from './colorBase';
 //  用于生成颜色变量
-export const getColorVariables = (theme: 'light' | 'dark' = 'light', primaryColor?: string[]) => {
-	const colors = theme === 'light' ? { ...lightColors } : { ...darkColors };
+export const getColorVariables = (theme: ThemeType = 'light', primaryColor?: string[]) => {
+	const colors = theme === ThemeMode.LIGHT ? { ...lightColors } : { ...darkColors };
 	if (primaryColor) {
 		colors.primarys = primaryColor;
 	}
@@ -47,9 +49,9 @@ export const getColorVariables = (theme: 'light' | 'dark' = 'light', primaryColo
 };
 
 //  用于生成颜色变量
-export const getColorVariables2 = (theme: 'light' | 'dark' = 'light', primaryColor?: string[]) => {
-	const colors: any = theme === 'light' ? { ...lightColors2 } : { ...darkColors2 };
-	const isDark = theme === 'dark';
+export const getColorVariables2 = (theme: ThemeType = 'light', primaryColor?: string[]) => {
+	const colors: any = theme === ThemeMode.LIGHT ? { ...lightColors2 } : { ...darkColors2 };
+	const isDark = theme === ThemeMode.DARK;
 	if (primaryColor) {
 		colors.primarys = primaryColor;
 	} else {
@@ -95,22 +97,22 @@ export const getColorVariables2 = (theme: 'light' | 'dark' = 'light', primaryCol
 		'--h-danger-disabled': colors.reds[3],
 
 		// 文字
-		'--h-text-color-title': isDark ? baseColor2.gray[0] : baseColor2.gray[10],
-		'--h-text-color-primary': isDark ? baseColor2.gray[1] : baseColor2.gray[9],
-		'--h-text-color-secondary': isDark ? baseColor2.gray[2] : baseColor2.gray[8],
-		'--h-text-color-disabled': isDark ? baseColor2.gray[3] : baseColor2.gray[7],
+		'--h-text-color-title': isDark ? baseColor2.gray[1] : baseColor2.gray[9],
+		'--h-text-color-primary': isDark ? baseColor2.gray[2] : baseColor2.gray[8],
+		'--h-text-color-secondary': isDark ? baseColor2.gray[3] : baseColor2.gray[7],
+		'--h-text-color-disabled': isDark ? baseColor2.gray[4] : baseColor2.gray[6],
 
 		// 边框颜色
-		'--h-border-color': isDark ? baseColor2.gray[4] : baseColor2.gray[5],
+		'--h-border-color': isDark ? baseColor2.gray[6] : baseColor2.gray[3],
 
 		// 分割线
 		'--h-divider-color': isDark ? baseColor2.gray[6] : baseColor2.gray[4],
 
 		// 背景填充色
-		'--h-fill-bg': isDark ? baseColor2.gray[10] : baseColor2.gray[0],
-		'--h-fill-bg-hover': isDark ? baseColor2.gray[9] : baseColor2.gray[1],
-		'--h-fill-form-bg': isDark ? baseColor2.black : baseColor2.white,
-		'--h-fill-input-bg': isDark ? baseColor2.gray[10] : baseColor2.gray[0],
+		'--h-fill-bg': isDark ? baseColor2.gray[9] : baseColor2.gray[0],
+		'--h-fill-bg-hover': isDark ? baseColor2.gray[8] : baseColor2.gray[2],
+		'--h-fill-form-bg': isDark ? baseColor2.gray[10] : baseColor2.white,
+		'--h-fill-input-bg': isDark ? baseColor2.gray[9] : baseColor2.gray[0],
 	};
 };
 

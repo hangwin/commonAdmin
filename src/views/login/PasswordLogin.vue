@@ -53,7 +53,7 @@
 			</el-form-item>
 			<el-form-item class="enter-x">
 				<div class="flex w-full justify-center">
-					<span class="text-size-14px leading-30px text-$h-text-color-secondory"
+					<span class="text-size-14px leading-30px text-$h-text-color-disabled"
 						>没有账号 ？</span
 					>
 					<el-button link :color="comonentColorProp.primaryColor">去注册</el-button>
@@ -157,7 +157,7 @@ const handleAnimationEnd = () => {
 }
 
 :deep(.el-form-item__label) {
-	color: var(--h-text-color-secondory);
+	color: var(--h-text-color-disabled);
 }
 
 :deep(.el-button.is-link) {

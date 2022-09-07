@@ -4,23 +4,24 @@ import { baseColor } from '@/theme/colors/colorBase';
 import { defineStore } from 'pinia';
 import type { ThemeType } from '@/types/theme';
 import type { ColorVariables } from '@/theme/colors/colorVariable';
+import { ThemeMode } from '@/constants/uiConfigConstants';
 
 // 应用相关的配置，如主题，布局等
 export const useAppStore = defineStore('appConfig', {
 	state: () => {
 		return {
 			theme: {
-				mode: 'light',
+				mode: ThemeMode.LIGHT,
 				primary: baseColor.primary,
 				colorVariables: getColorVariables2(),
 			},
 		};
 	},
 	actions: {
-		setThemeMode(mode: ThemeType) {
-			this.theme.mode = mode;
-			const colors = initColorTheme(mode as any, this.theme.primary);
-			console.log('after change theme', colors);
+		setThemeMode(mode?: ThemeType) {
+			console.log('setThememode', this.theme.mode, mode);
+			this.theme.mode = mode || (this.theme.mode as any) || ThemeMode.LIGHT;
+			const colors = initColorTheme(this.theme.mode as any, this.theme.primary);
 			this.setColorVariables(colors);
 		},
 		setPrimaryColor(primaryColor: string) {

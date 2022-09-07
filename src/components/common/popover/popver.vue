@@ -38,16 +38,21 @@ const props = defineProps({
 			return true;
 		},
 	},
+	visiable: {
+		type: Boolean,
+		default: false,
+	},
 });
-const visiable = ref(false);
+const emit = defineEmits(['update:visiable']);
 let timer: any = null;
 const showContent = () => {
 	clearTimeout(timer);
-	visiable.value = true;
+	console.log('showContent');
+	emit('update:visiable', true);
 };
 const hideContent = () => {
 	timer = setTimeout(() => {
-		visiable.value = false;
+		emit('update:visiable', false);
 	}, 300);
 };
 const hoverContent = ref(null);
@@ -65,35 +70,38 @@ const hoverPosition = ref({
 	left: '0',
 	top: '0',
 });
-watch(visiable, (newVal) => {
-	if (!newVal) {
-		return;
-	}
-	nextTick(() => {
-		const { width, height } = getElementSize(mainContent.value as any);
-		const { width: w, height: h } = getElementSize(hoverContent.value as any);
-		switch (props.position) {
-			case 'top-left':
-				hoverPosition.value.top = `${-h}px`;
-				hoverPosition.value.left = `${-w}px`;
-				return;
-			case 'bottom-left':
-				hoverPosition.value.top = `${height}px`;
-				hoverPosition.value.left = `${-w}px`;
-				return;
-			case 'top-right':
-				hoverPosition.value.top = `${-h}px`;
-				hoverPosition.value.left = `${width}px`;
-				return;
-			case 'bottom-right':
-				hoverPosition.value.top = `${height}px`;
-				hoverPosition.value.left = `${width}px`;
-				return;
-			default:
-				return;
+watch(
+	() => props.visiable,
+	(newVal) => {
+		if (!newVal) {
+			return;
 		}
-	});
-});
+		nextTick(() => {
+			const { width, height } = getElementSize(mainContent.value as any);
+			const { width: w, height: h } = getElementSize(hoverContent.value as any);
+			switch (props.position) {
+				case 'top-left':
+					hoverPosition.value.top = `${-h}px`;
+					hoverPosition.value.left = `${-w}px`;
+					return;
+				case 'bottom-left':
+					hoverPosition.value.top = `${height}px`;
+					hoverPosition.value.left = `${-w}px`;
+					return;
+				case 'top-right':
+					hoverPosition.value.top = `${-h}px`;
+					hoverPosition.value.left = `${width}px`;
+					return;
+				case 'bottom-right':
+					hoverPosition.value.top = `${height}px`;
+					hoverPosition.value.left = `${width}px`;
+					return;
+				default:
+					return;
+			}
+		});
+	}
+);
 </script>
 <style lang="less" scoped>
 .content-enter-active,

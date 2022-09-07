@@ -1,3 +1,5 @@
+import { ThemeMode } from '@/constants/uiConfigConstants';
+import type { ThemeType } from '@/types/theme';
 import { generate } from '@ant-design/colors';
 // 基础色，用于生成浅色模式和深色模式的衍生色
 export const baseColor = {
@@ -50,10 +52,10 @@ export const baseColor2 = {
 };
 
 // 通过color衍生出其他过渡色
-export const getColors = (mode: 'dark' | 'light' = 'light', color: string = baseColor.primary) => {
-	const antMode = mode === 'light' ? 'default' : mode;
+export const getColors = (mode: ThemeType = ThemeMode.LIGHT, color: string = baseColor.primary) => {
+	const antMode = mode === ThemeMode.LIGHT ? 'default' : mode;
 	const options: any = { theme: antMode };
-	if (antMode === 'dark') {
+	if (antMode === ThemeMode.DARK) {
 		options.backgroundColor = '#141414';
 	}
 	const colors = generate(color, options);
@@ -61,40 +63,39 @@ export const getColors = (mode: 'dark' | 'light' = 'light', color: string = base
 };
 
 export const lightColors2 = {
-	purples: getColors('light', baseColor2.purple),
+	purples: getColors(ThemeMode.LIGHT, baseColor2.purple),
 
-	greens: getColors('light', baseColor2.green),
-	yellows: getColors('light', baseColor2.yellow),
-	reds: getColors('light', baseColor2.red),
+	greens: getColors(ThemeMode.LIGHT, baseColor2.green),
+	yellows: getColors(ThemeMode.LIGHT, baseColor2.yellow),
+	reds: getColors(ThemeMode.LIGHT, baseColor2.red),
 };
 export const darkColors2 = {
-	purples: getColors('dark', baseColor2.purple),
+	purples: getColors(ThemeMode.DARK, baseColor2.purple),
 
-	greens: getColors('dark', baseColor2.green),
-	yellows: getColors('dark', baseColor2.yellow),
-	reds: getColors('dark', baseColor2.red),
+	greens: getColors(ThemeMode.DARK, baseColor2.green),
+	yellows: getColors(ThemeMode.DARK, baseColor2.yellow),
+	reds: getColors(ThemeMode.DARK, baseColor2.red),
 };
 
 export const lightColors = {
 	primarys: getColors(),
-	grays: getColors('light', baseColor.gray),
-	yellows: getColors('light', baseColor.yellow),
-	reds: getColors('light', baseColor.red),
-	green: getColors('light', baseColor.green),
-	text: getColors('light', baseColor.black),
-	bg: getColors('light', baseColor.gray),
+	grays: getColors(ThemeMode.LIGHT, baseColor.gray),
+	yellows: getColors(ThemeMode.LIGHT, baseColor.yellow),
+	reds: getColors(ThemeMode.LIGHT, baseColor.red),
+	green: getColors(ThemeMode.LIGHT, baseColor.green),
+	text: getColors(ThemeMode.LIGHT, baseColor.black),
+	bg: getColors(ThemeMode.LIGHT, baseColor.gray),
 	leftLayoutBg: baseColor.white,
 };
-console.log('lightColors', lightColors);
 
 export const darkColors = {
-	primarys: getColors('dark'),
-	grays: getColors('dark', baseColor.gray),
-	yellows: getColors('dark', baseColor.yellow),
-	reds: getColors('dark', baseColor.red),
-	green: getColors('dark', baseColor.green),
-	text: getColors('dark', baseColor.white),
-	bg: getColors('dark', '#1f2327'),
+	primarys: getColors(ThemeMode.DARK),
+	grays: getColors(ThemeMode.DARK, baseColor.gray),
+	yellows: getColors(ThemeMode.DARK, baseColor.yellow),
+	reds: getColors(ThemeMode.DARK, baseColor.red),
+	green: getColors(ThemeMode.DARK, baseColor.green),
+	text: getColors(ThemeMode.DARK, baseColor.white),
+	bg: getColors(ThemeMode.DARK, '#1f2327'),
 	leftLayoutBg: '#16191c',
 };
 console.log('darkColors', darkColors);

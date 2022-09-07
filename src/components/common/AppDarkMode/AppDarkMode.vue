@@ -1,5 +1,5 @@
 <template>
-	<popver>
+	<popver v-model:visiable="visiable">
 		<svg-icon
 			:name="iconName"
 			size="21"
@@ -10,7 +10,7 @@
 			<div
 				v-for="item in themeModes"
 				:key="item.type"
-				class="flex items-center w-[110px] overflow-hidden p-1 cursor-pointer rounded text-$h-text-color bg-$h-fill-form-bg hover:bg-$h-fill-bg-hover"
+				class="flex items-center w-[110px] overflow-hidden p-1 cursor-pointer rounded text-$h-text-color-secondary bg-$h-fill-form-bg hover:bg-$h-fill-bg-hover"
 				@click="changeDarkMode(item.type)"
 			>
 				<svg-icon
@@ -27,19 +27,21 @@
 import { useAppStore } from '@/store/modules/appConfig';
 import SvgIcon from '@/components/SvgIcon/SvgIcon.vue';
 import popver from '../popover/popver.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import type { ThemeConfig, ThemeType } from '@/types/theme';
+import { ThemeMode } from '@/constants/uiConfigConstants';
 const appStore = useAppStore();
 const iconName = computed(() => {
 	switch (appStore.theme.mode) {
-		case 'light':
+		case ThemeMode.LIGHT:
 			return 'sun';
-		case 'dark':
+		case ThemeMode.DARK:
 			return 'moon';
 		default:
 			return 'theme';
 	}
 });
+const visiable = ref(false);
 const comonentColorProp = computed(() => {
 	return {
 		textColor: appStore.getThemeColors['--h-text-color-secondary'],
@@ -49,12 +51,12 @@ const comonentColorProp = computed(() => {
 const themeModes: ThemeConfig[] = [
 	{
 		name: '浅色',
-		type: 'light',
+		type: ThemeMode.LIGHT,
 		icon: 'sun',
 	},
 	{
 		name: '深色',
-		type: 'dark',
+		type: ThemeMode.DARK,
 		icon: 'moon',
 	},
 ];
@@ -67,13 +69,17 @@ if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
 	});
 }
 const changeDarkMode = (mode: ThemeType) => {
+	visiable.value = false;
+	if (mode === appStore.theme.mode) {
+		return;
+	}
 	console.log('changeDarkMode', mode);
 	if (mode === 'system') {
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			appStore.setThemeMode('dark');
+			appStore.setThemeMode(ThemeMode.DARK);
 			return;
 		}
-		appStore.setThemeMode('light');
+		appStore.setThemeMode(ThemeMode.LIGHT);
 		return;
 	}
 	appStore.setThemeMode(mode);
