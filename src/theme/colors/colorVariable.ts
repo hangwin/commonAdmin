@@ -51,11 +51,10 @@ export const getColorVariables2 = (theme: 'light' | 'dark' = 'light', primaryCol
 	const colors: any = theme === 'light' ? { ...lightColors2 } : { ...darkColors2 };
 	const isDark = theme === 'dark';
 	if (primaryColor) {
-		colors.primary = primaryColor;
+		colors.primarys = primaryColor;
 	} else {
-		colors.primary = colors.purples;
+		colors.primarys = colors.purples;
 	}
-	console.log('getColorVariables', colors);
 	return {
 		// 主题色
 		'--h-primary': colors.primarys[5],
@@ -103,14 +102,16 @@ export const getColorVariables2 = (theme: 'light' | 'dark' = 'light', primaryCol
 
 		// 边框颜色
 		'--h-border-color': isDark ? baseColor2.gray[4] : baseColor2.gray[5],
+
 		// 分割线
 		'--h-divider-color': isDark ? baseColor2.gray[6] : baseColor2.gray[4],
+
 		// 背景填充色
-		'--h-fill-bg': isDark ? baseColor2.gray[0] : baseColor2.gray[10],
-		'--h-fill-bg-hover': isDark ? baseColor2.gray[1] : baseColor2.gray[9],
-
-		'--h-fill-form-bg': isDark ? baseColor2.white : baseColor2.black,
-
-		'--h-fill-input-bg': isDark ? baseColor2.gray[0] : baseColor2.gray[10],
+		'--h-fill-bg': isDark ? baseColor2.gray[10] : baseColor2.gray[0],
+		'--h-fill-bg-hover': isDark ? baseColor2.gray[9] : baseColor2.gray[1],
+		'--h-fill-form-bg': isDark ? baseColor2.black : baseColor2.white,
+		'--h-fill-input-bg': isDark ? baseColor2.gray[10] : baseColor2.gray[0],
 	};
 };
+
+export type ColorVariables = ReturnType<typeof getColorVariables2>;

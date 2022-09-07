@@ -42,7 +42,7 @@ const iconName = computed(() => {
 });
 const comonentColorProp = computed(() => {
 	return {
-		textColor: appStore.getThemeColors['--h-text-color'],
+		textColor: appStore.getThemeColors['--h-text-color-secondary'],
 	};
 });
 

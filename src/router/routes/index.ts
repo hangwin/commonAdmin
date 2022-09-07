@@ -25,4 +25,12 @@ const loginRoute: RouteRecordRaw = {
 	},
 };
 
-export const routes = [rootRoute, loginRoute, homeRoot];
+const color: RouteRecordRaw = {
+	path: '/colors',
+	component: () => import('@/theme/colors/ColorDemo.vue'),
+	meta: {
+		title: '颜色测试',
+	},
+};
+
+export const routes = [rootRoute, loginRoute, homeRoot, color];

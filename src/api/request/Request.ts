@@ -1,6 +1,5 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
-import { isFunction } from '@/utils/is';
 import { cloneDeep } from 'lodash-es';
 import Loading from './Loading';
 

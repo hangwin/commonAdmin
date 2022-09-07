@@ -16,7 +16,7 @@
 						alt="CommonAdmin"
 						class="w-92px h-92px mx-auto mt-120px <sm:(mt-20 block) <lg:hidden"
 					/>
-					<div class="text-center mx-auto mt-30px text-$h-text-color text-xl">
+					<div class="text-center mx-auto mt-30px text-$h-text-color-title text-xl">
 						登 录
 					</div>
 					<div class="mt-30px">
