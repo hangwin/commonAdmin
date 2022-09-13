@@ -1,6 +1,11 @@
 <template>
 	<div class="login relative w-full h-full full-bg duration-300">
-		<!-- <div class="xl:hidden">logo 小尺寸才展示</div> -->
+		<div
+			class="absolute left-4 top-4 z-50 flex <sm:hidden lg:hidden md:visible text-$h-text-color-secondary font-bold"
+		>
+			<img src="@/assets/newlogo.svg" alt="CommonAdmin" class="w-22px h-22px mr-2" />
+			<span>CommonAdmin</span>
+		</div>
 		<div class="absolute right-4 top-4 z-50 flex">
 			<AppDarkMode class="mr-2" />
 			<AppLocale />

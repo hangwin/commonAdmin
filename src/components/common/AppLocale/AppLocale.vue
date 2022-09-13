@@ -48,5 +48,6 @@ const themeModes = [
 ];
 const changeLang = (lang: LOCALE) => {
 	changeLocale(lang);
+	visiable.value = false;
 };
 </script>

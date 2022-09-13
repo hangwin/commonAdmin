@@ -97,10 +97,10 @@ export const getColorVariables2 = (theme: ThemeType = 'light', primaryColor?: st
 		'--h-danger-disabled': colors.reds[3],
 
 		// 文字
-		'--h-text-color-title': isDark ? baseColor2.gray[1] : baseColor2.gray[9],
-		'--h-text-color-primary': isDark ? baseColor2.gray[2] : baseColor2.gray[8],
-		'--h-text-color-secondary': isDark ? baseColor2.gray[3] : baseColor2.gray[7],
-		'--h-text-color-disabled': isDark ? baseColor2.gray[4] : baseColor2.gray[6],
+		'--h-text-color-title': isDark ? baseColor2.gray[2] : baseColor2.gray[8],
+		'--h-text-color-primary': isDark ? baseColor2.gray[3] : baseColor2.gray[7],
+		'--h-text-color-secondary': isDark ? baseColor2.gray[4] : baseColor2.gray[6],
+		'--h-text-color-disabled': isDark ? baseColor2.gray[5] : baseColor2.gray[5],
 
 		// 边框颜色
 		'--h-border-color': isDark ? baseColor2.gray[6] : baseColor2.gray[3],
