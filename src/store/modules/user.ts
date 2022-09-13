@@ -29,6 +29,7 @@ export const useUserStore = defineStore('user', {
 		},
 	},
 	persist: {
-		paths: ['job'],
+		paths: ['token'],
+		storage: sessionStorage,
 	},
 });

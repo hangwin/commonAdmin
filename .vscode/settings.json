@@ -1,0 +1,62 @@
+{
+	// "editor.defaultFormatter": "esbenp.prettier-vscode",
+	// "[javascriptreact]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "[typescript]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "[typescriptreact]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "[html]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "[css]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "[less]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "[scss]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "[markdown]": {
+	// 	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// },
+	// "editor.formatOnSave": true,
+	"prettier.ignorePath": ".prettierignore",
+	"eslint.run": "onSave",
+	"eslint.alwaysShowStatus": true,
+	// 老版本的eslint插件才需要eslint.validate的选项来指定非javascript类型的文件
+	// "eslint.validate": [
+	// 	"typescript",
+	// ],
+	// 设置 lint 执行时机，onType 输入时，onSave 保存时
+	// "eslint.run": "onSave",
+	// // 设置保存时自动 fix
+	// "editor.codeActionsOnSave": {
+	// 	"source.fixAll.eslint": true
+	// }
+	"stylelint.enable": true,
+ 	"stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass"],
+	"editor.codeActionsOnSave": {
+		"source.fixAll.stylelint": true
+	},
+	// windicss
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"i18n-ally.localesPaths": ["src/locales"],
+	"i18n-ally.keystyle": "nested",
+	"i18n-ally.sourceLanguage": "en",
+	"i18n-ally.displayLanguage": "zh-CN",
+	"i18n-ally.disabled": true,
+	// "i18n-ally.namespace": true,
+ 	// "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
+	"i18n-ally.enabledParsers": [
+		"ts",
+		"js"
+	],
+	"i18n-ally.includeSubfolders": true,
+}

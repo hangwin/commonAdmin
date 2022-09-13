@@ -8,7 +8,7 @@
 			status-icon
 		>
 			<el-form-item
-				label="账 户"
+				:label="t('system.login.account')"
 				prop="account"
 				class="enter-x"
 				@animationend="handleAnimationEnd"
@@ -20,7 +20,7 @@
 				></el-input>
 			</el-form-item>
 			<el-form-item
-				label="密 码"
+				:label="t('system.login.password')"
 				prop="password"
 				class="enter-x"
 				@animationend="handleAnimationEnd"
@@ -36,32 +36,42 @@
 			<el-form-item class="enter-x">
 				<div class="w-full flex px-1 justify-between">
 					<div class="text-size-12px leading-22px">
-						<el-checkbox v-model="userInfo.isRememberMe" label="记住我" />
+						<el-checkbox
+							v-model="userInfo.isRememberMe"
+							:label="t('system.login.rememberMe')"
+						/>
 					</div>
-					<el-button link :color="comonentColorProp.primaryColor">重置密码</el-button>
+					<el-button link :color="comonentColorProp.primaryColor">{{
+						t('system.login.resetPassword')
+					}}</el-button>
 				</div>
 			</el-form-item>
 			<el-form-item class="enter-x">
 				<el-button
 					class="w-full"
 					:color="comonentColorProp.primaryColor"
+					:class="[currentLocale === 'zh-CN' ? 'tracking-0.5em' : '']"
 					size="large"
 					:loading="isLoading"
 					@click="login"
-					>登 录</el-button
+					>{{ t('system.login.loginBtn') }}</el-button
 				>
 			</el-form-item>
 			<el-form-item class="enter-x">
 				<div class="flex w-full justify-center">
-					<span class="text-size-14px leading-30px text-$h-text-color-disabled"
-						>没有账号 ？</span
-					>
-					<el-button link :color="comonentColorProp.primaryColor">去注册</el-button>
+					<span class="text-size-14px leading-30px text-$h-text-color-disabled">
+						{{ t('system.login.noAccount') }}
+					</span>
+					<el-button link :color="comonentColorProp.primaryColor">{{
+						t('system.login.goRegister')
+					}}</el-button>
 				</div>
 			</el-form-item>
 		</el-form>
 	</div>
-	<el-divider><span class="text-gray-500">其他登录方式</span></el-divider>
+	<el-divider
+		><span class="text-gray-500">{{ t('system.login.otherLogin') }}</span></el-divider
+	>
 	<div class="mx-auto text-center flex justify-evenly mb-5 enter-x">
 		<svg-icon name="github" size="22" :hover-color="comonentColorProp.primaryColor" />
 		<svg-icon name="weixin" size="22" :hover-color="comonentColorProp.primaryColor" />
@@ -76,6 +86,8 @@ import { computed, ref } from 'vue';
 import { useFormRules, useFormValid } from './useLogin';
 import { useUserStore } from '@/store/modules/user';
 import { useAppStore } from '@/store/modules/appConfig';
+import { useLocale } from '@/locales/useLocale';
+const { t, currentLocale } = useLocale();
 const userInfo = ref({
 	account: 'common',
 	password: 'common',

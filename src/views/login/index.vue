@@ -1,7 +1,10 @@
 <template>
 	<div class="login relative w-full h-full full-bg duration-300">
 		<!-- <div class="xl:hidden">logo 小尺寸才展示</div> -->
-		<div class="absolute right-4 top-4 z-50"><AppDarkMode /></div>
+		<div class="absolute right-4 top-4 z-50 flex">
+			<AppDarkMode class="mr-2" />
+			<AppLocale />
+		</div>
 		<!--  <lg:bg-[#293146] -->
 		<div class="relative flex h-full w-full <lg:bg-$h-fill-mdsize-bg">
 			<!-- flex布局 with:100% height:100% 大尺寸时 width:50% -->
@@ -16,8 +19,11 @@
 						alt="CommonAdmin"
 						class="w-92px h-92px mx-auto mt-120px <sm:(mt-20 block) <lg:hidden"
 					/>
-					<div class="text-center mx-auto mt-30px text-$h-text-color-title text-xl">
-						登 录
+					<div
+						class="text-center mx-auto mt-30px text-$h-text-color-title text-xl"
+						:class="[currentLocale === 'zh-CN' ? 'tracking-0.5em' : '']"
+					>
+						{{ t('system.login.loginFormTitle') }}
 					</div>
 					<div class="mt-30px">
 						<PasswordLogin />
@@ -42,6 +48,9 @@
 <script lang="ts" setup>
 import PasswordLogin from './PasswordLogin.vue';
 import AppDarkMode from '@/components/common/AppDarkMode/AppDarkMode.vue';
+import AppLocale from '@/components/common/AppLocale/AppLocale.vue';
+import { useLocale } from '@/locales/useLocale';
+const { t, currentLocale } = useLocale();
 </script>
 <style lang="less" scoped>
 .full-bg {

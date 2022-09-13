@@ -7,6 +7,7 @@ import { setupStore } from './store';
 import 'virtual:windi.css';
 import 'virtual:svg-icons-register';
 import { useAppStore } from './store/modules/appConfig';
+import { setupI18n } from '@/locales/setupI18n';
 
 if (import.meta.env.DEV) {
 	console.log('这是开发才有的代码，其他环境不应该打包进来');
@@ -16,4 +17,5 @@ setRouter(app);
 setRouteHooks(router);
 setupStore(app);
 useAppStore().setThemeMode();
+setupI18n(app);
 app.mount('#app');

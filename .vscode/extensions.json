@@ -4,6 +4,7 @@
 		"editorconfig.editorconfig",
 		"dbaeumer.vscode-eslint",
 		"stylelint.vscode-stylelint",
-		"voorjaar.windicss-intellisense"
+		"voorjaar.windicss-intellisense",
+		"lokalise.i18n-ally"
 	]
 }
