@@ -1,6 +1,6 @@
 <template>
 	<li :class="getSubMenuItemCls">
-		<div>
+		<div :class="`${prefixCls}-submenu-title`">
 			<slot name="title"></slot>
 		</div>
 		<slot></slot>

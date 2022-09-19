@@ -16,6 +16,8 @@ const getMenuCls = computed(() => {
 <style lang="less">
 @menu-cls: ~'@{namespace}-menu';
 @menu-item-cls: ~'@{menu-cls}-item';
+@submenu: ~'@{namespace}-submenu';
+@submenu-title: ~'@{submenu}-title';
 .@{menu-cls} {
 	position: relative;
 	display: block;
@@ -36,7 +38,8 @@ const getMenuCls = computed(() => {
 		outline: none;
 		cursor: pointer;
 	}
-	&-vertical &-item {
+	&-vertical &-item,
+	&-vertical &-submenu-title {
 		position: relative;
 		padding: 14px 24px;
 	}
