@@ -6,3 +6,10 @@ export interface GlobalConfig {
 	// 接口前缀
 	urlPrefix?: string;
 }
+
+export interface MenuData {
+	name: string;
+	path: string;
+	icon?: string;
+	children?: MenuData[];
+}

@@ -35,14 +35,12 @@
 	// 设置 lint 执行时机，onType 输入时，onSave 保存时
 	// "eslint.run": "onSave",
 	// // 设置保存时自动 fix
-	// "editor.codeActionsOnSave": {
-	// 	"source.fixAll.eslint": true
-	// }
-	"stylelint.enable": true,
- 	"stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass"],
 	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true,
 		"source.fixAll.stylelint": true
 	},
+	"stylelint.enable": true,
+ 	"stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass"],
 	// windicss
 	"editor.quickSuggestions": {
 		"strings": true

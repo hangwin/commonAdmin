@@ -3,7 +3,7 @@ module.exports = {
 		// 注意stylelint 14的版本里在vue文件中可能会出现Unknown word (CssSyntaxError)这个报错
 		// 此时可以使用stylelint-config-standard-scss这个包来解决这个报错
 		// 当然你也可以选择降低版本来解决
-		'stylelint-config-standard-scss',
+		// 'stylelint-config-standard-scss',
 		// 'stylelint-config-standard',
 		// 下面这个包已经包含了stylelint-config-standard，所以上面就可以注释掉了
 		'stylelint-config-recommended-vue',
@@ -12,7 +12,7 @@ module.exports = {
 		// 下面是基于stylelint-order的规范css属性书写顺序的包，这样我们就不用自己在rules中手动指定了
 		'stylelint-config-rational-order',
 	],
-	ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts'],
+	ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', '**/assets/**/*'],
 	// plugins: ['stylelint-order'],
 	rules: {
 		indentation: 'tab',
@@ -29,7 +29,7 @@ module.exports = {
 		// },
 		{
 			files: ['**/*.less'],
-			customSyntax: 'postcss-less',
+			customSyntax: 'postcss-syntax',
 		},
 	],
 };

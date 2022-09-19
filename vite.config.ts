@@ -72,5 +72,12 @@ export default defineConfig(({ mode }) => {
 				},
 			},
 		},
+		css: {
+			preprocessorOptions: {
+				less: {
+					additionalData: `@import "${resolve(__dirname, 'src/style/index.less')}";`,
+				},
+			},
+		},
 	};
 });
