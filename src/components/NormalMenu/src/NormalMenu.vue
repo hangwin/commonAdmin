@@ -1,7 +1,7 @@
 <template>
 	<Menu>
 		<template v-for="item in menuData" :key="item.path">
-			<SubMenu :item="item"></SubMenu>
+			<SubMenu :item="item" :level="1"></SubMenu>
 		</template>
 	</Menu>
 </template>
@@ -18,6 +18,13 @@ const menuData = [
 				name: '菜单1-1',
 				icon: 'icon1-1',
 				path: 'menu1-1',
+				children: [
+					{
+						name: '菜单1-1-1',
+						icon: 'icon1-1-1',
+						path: 'menu1-1-1',
+					},
+				],
 			},
 			{
 				name: '菜单1-2',

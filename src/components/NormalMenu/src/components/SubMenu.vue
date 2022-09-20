@@ -1,15 +1,15 @@
 <template>
 	<!-- 没有子菜单，则直接展示即可 -->
-	<MenuItem v-if="!hasChildren">
+	<MenuItem v-if="!hasChildren" :level="level">
 		{{ item.name }}
 	</MenuItem>
 	<!-- 有子菜单，需要递归展示子菜单 -->
-	<SubMenuItem v-if="hasChildren">
+	<SubMenuItem v-if="hasChildren" :level="level">
 		<template #title>
-			{{ item.name }}
+			<div>{{ level }} {{ item.name }} </div>
 		</template>
 		<template v-for="child in item.children" :key="child.path">
-			<SubMenu :item="child"></SubMenu>
+			<SubMenu :item="child" :level="level + 1"></SubMenu>
 		</template>
 	</SubMenuItem>
 </template>
@@ -21,6 +21,10 @@ import SubMenuItem from './SubMenuItem.vue';
 const props = defineProps({
 	item: {
 		type: Object as PropType<MenuData>,
+		required: true,
+	},
+	level: {
+		type: Number,
 		required: true,
 	},
 });
