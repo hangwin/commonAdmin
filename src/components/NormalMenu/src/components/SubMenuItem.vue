@@ -17,9 +17,10 @@
 <script lang="ts" setup>
 import { SvgIcon } from '@/components/SvgIcon';
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
-import { computed, getCurrentInstance, ref } from 'vue';
+import { computed, getCurrentInstance, inject, ref } from 'vue';
 import { useMenuItem } from './useMenu';
 import { useAppStore } from '@/store/modules/appConfig';
+import { MenuProvider } from './types';
 defineProps({
 	level: {
 		type: Number,
@@ -44,8 +45,10 @@ const comonentColorProp = computed(() => {
 		iconColor: appStore.getThemeColors['--h-text-color-disabled'],
 	};
 });
-
+const { props: parentMenuProps } = inject(`NormalMenu`) as MenuProvider;
+const isAccordion = computed(() => parentMenuProps.accordion);
 const handleClick = () => {
+	// if (isA)
 	opened.value = !opened.value;
 };
 </script>

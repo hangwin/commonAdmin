@@ -5,8 +5,9 @@
 </template>
 <script lang="ts" setup>
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
-import { computed } from 'vue';
-defineProps({
+import { computed, getCurrentInstance, provide } from 'vue';
+import { MenuProvider } from './types';
+const props = defineProps({
 	// 子菜单缩进大小
 	indentSize: {
 		type: Number,
@@ -22,6 +23,11 @@ defineProps({
 const { prefixCls } = useAppStyleSettings('menu');
 const getMenuCls = computed(() => {
 	return [prefixCls, `${prefixCls}-vertical`];
+});
+const instance = getCurrentInstance();
+// 防止有多个menu实例的时候数据串
+provide<MenuProvider>(`NormalMenu`, {
+	props,
 });
 </script>
 <style lang="less">
