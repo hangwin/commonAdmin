@@ -10,3 +10,5 @@ interface ImportMetaEnv {
 interface ImportMeta {
 	readonly env: ImportMetaEnv;
 }
+
+declare let defineOptions: (options: any) => any;

@@ -1,4 +1,5 @@
 import { ComponentInternalInstance, computed } from 'vue';
+import mitt from 'mitt';
 
 const findParentByComponent = (
 	name: string[] | string,
@@ -33,8 +34,31 @@ export const useMenuItem = (instance: ComponentInternalInstance | null) => {
 	const getParentMenu = () => {
 		return findParentByComponent('Menu', instance);
 	};
+	const getParentList = () => {
+		let parent = instance;
+		if (!parent) {
+			return {
+				uidList: [],
+				list: [],
+			};
+		}
+		const ret: any[] = [];
+		while (parent && parent.type.name !== 'Menu') {
+			if (parent.type.name === 'SubMenu') {
+				ret.push(parent);
+			}
+			parent = parent.parent;
+		}
+		return {
+			uidList: ret.map((item) => item.uid),
+			list: ret,
+		};
+	};
 	return {
 		getItemStyle,
 		getParentMenu,
+		getParentList,
 	};
 };
+
+export const menuEmitter = mitt();

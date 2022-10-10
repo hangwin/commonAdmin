@@ -5,8 +5,9 @@
 </template>
 <script lang="ts" setup>
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
-import { computed, getCurrentInstance, provide } from 'vue';
+import { computed, getCurrentInstance, onMounted, provide, ref } from 'vue';
 import { MenuProvider } from './types';
+import { menuEmitter } from './useMenu';
 const props = defineProps({
 	// 子菜单缩进大小
 	indentSize: {
@@ -18,16 +19,29 @@ const props = defineProps({
 		type: Boolean,
 		default: true,
 	},
+	theme: {
+		type: String,
+		default: 'light',
+	},
 });
+const emit = defineEmits(['select']);
 // common-menu
 const { prefixCls } = useAppStyleSettings('menu');
 const getMenuCls = computed(() => {
-	return [prefixCls, `${prefixCls}-vertical`];
+	return [prefixCls, `${prefixCls}-vertical`, `${prefixCls}-${props.theme}`];
 });
 const instance = getCurrentInstance();
-// 防止有多个menu实例的时候数据串
+const currentActivePath = ref('');
 provide<MenuProvider>(`NormalMenu`, {
 	props,
+	currentActivePath,
+});
+onMounted(() => {
+	menuEmitter.on('menu-item-select', (path) => {
+		console.log('rootmenu item select', path);
+		currentActivePath.value = path as string;
+		emit('select');
+	});
 });
 </script>
 <style lang="less">
@@ -35,6 +49,20 @@ provide<MenuProvider>(`NormalMenu`, {
 @menu-item-cls: ~'@{menu-cls}-item';
 @submenu: ~'@{namespace}-submenu';
 @submenu-title: ~'@{submenu}-title';
+@light-primary: #605bff;
+// 选中了某个菜单项之后，该菜单项后面有一根亮线提示
+.light-border {
+	&::after {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		display: block;
+		width: 2px;
+		background-color: var(--h-primary);
+		content: '';
+	}
+}
 .@{menu-cls} {
 	position: relative;
 	display: block;
@@ -48,6 +76,12 @@ provide<MenuProvider>(`NormalMenu`, {
 	background-color: var(--h-fill-form-bg);
 	outline: none;
 	user-select: none;
+	&-light {
+		background-color: #fff;
+		.@{submenu}-active {
+			color: var(--h-text-color-primary) !important;
+		}
+	}
 	.@{menu-item-cls} {
 		position: relative;
 		display: flex;
@@ -55,11 +89,25 @@ provide<MenuProvider>(`NormalMenu`, {
 		list-style: none;
 		outline: none;
 		cursor: pointer;
+		&:hover,
+		&:active {
+			color: inherit;
+		}
+	}
+	.@{menu-item-cls} > i {
+		margin-right: 6px;
+	}
+	&-item-disabled {
+		color: var(--h-text-color-disabled);
 	}
 	&-vertical &-item,
 	&-vertical &-submenu-title {
 		position: relative;
 		padding: 14px 24px;
+		cursor: pointer;
+		&:hover {
+			color: var(--h-text-color-primary);
+		}
 	}
 	&-vertical &-submenu-title-icon {
 		position: absolute;
@@ -72,6 +120,13 @@ provide<MenuProvider>(`NormalMenu`, {
 	}
 	&-vertical &-opened > * > &-submenu-title-icon {
 		transform: translateY(-50%) rotate(180deg);
+	}
+	&-light&-vertical &-item {
+		&-active:not(.@{menu-cls}-subitem-active) {
+			/* stylelint-disable-next-line function-no-unknown */
+			background-color: fade(@light-primary, 10);
+			.light-border();
+		}
 	}
 }
 </style>

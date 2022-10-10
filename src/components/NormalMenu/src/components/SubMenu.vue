@@ -1,6 +1,6 @@
 <template>
 	<!-- 没有子菜单，则直接展示即可 -->
-	<MenuItem v-if="!hasChildren" :level="level">
+	<MenuItem v-if="!hasChildren" :level="level" :path="item.path">
 		{{ item.name }}
 	</MenuItem>
 	<!-- 有子菜单，需要递归展示子菜单 -->

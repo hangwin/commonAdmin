@@ -4,6 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import windicss from 'vite-plugin-windicss';
 import ElementPlus from 'unplugin-element-plus/vite';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import DefineOptions from 'unplugin-vue-define-options/vite';
 import { resolve } from 'path';
 const resolvePath = (path: string) => {
 	// 返回相对当前项目根目录下的路径
@@ -28,6 +29,7 @@ export default defineConfig(({ mode }) => {
 				iconDirs: [resolvePath('src/assets/icons')],
 				symbolId: 'icon-[dir]-[name]',
 			}),
+			DefineOptions(),
 		],
 		resolve: {
 			alias: [

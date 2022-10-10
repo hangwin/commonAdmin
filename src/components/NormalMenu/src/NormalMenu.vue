@@ -1,5 +1,5 @@
 <template>
-	<Menu>
+	<Menu :accordion="true">
 		<template v-for="item in menuData" :key="item.path">
 			<SubMenu :item="item" :level="1"></SubMenu>
 		</template>
