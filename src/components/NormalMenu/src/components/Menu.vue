@@ -86,6 +86,7 @@ onMounted(() => {
 		position: relative;
 		display: flex;
 		align-items: center;
+		color: inherit;
 		list-style: none;
 		outline: none;
 		cursor: pointer;
@@ -123,9 +124,13 @@ onMounted(() => {
 	}
 	&-light&-vertical &-item {
 		&-active:not(.@{menu-cls}-subitem-active) {
+			color: @light-primary;
 			/* stylelint-disable-next-line function-no-unknown */
 			background-color: fade(@light-primary, 10);
 			.light-border();
+		}
+		&-active.@{menu-cls}-submenu{
+			color: @light-primary;
 		}
 	}
 }

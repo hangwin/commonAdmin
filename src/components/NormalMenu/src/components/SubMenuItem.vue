@@ -10,7 +10,7 @@
 			/>
 		</div>
 		<CollapseTransition>
-			<ul v-show="state.opened">
+			<ul v-show="state.opened" :class="prefixCls">
 				<slot></slot>
 			</ul>
 		</CollapseTransition>
