@@ -4,7 +4,7 @@
 		{{ item.name }}
 	</MenuItem>
 	<!-- 有子菜单，需要递归展示子菜单 -->
-	<SubMenuItem v-if="hasChildren" :level="level">
+	<SubMenuItem v-if="hasChildren" :level="level" :disabled="item.disabled">
 		<template #title>
 			<div>{{ level }} {{ item.name }} </div>
 		</template>

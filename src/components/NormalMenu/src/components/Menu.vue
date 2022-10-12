@@ -70,7 +70,7 @@ onMounted(() => {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	color: var(--h-text-color-disabled);
+	color: var(--h-text-color-primary);
 	font-size: 14px;
 	list-style: none;
 	background-color: var(--h-fill-form-bg);
@@ -99,13 +99,14 @@ onMounted(() => {
 		margin-right: 6px;
 	}
 	&-item-disabled {
-		color: var(--h-text-color-disabled);
+		color: var(--h-text-color-primary);
 	}
 	&-vertical &-item,
 	&-vertical &-submenu-title {
 		position: relative;
 		padding: 14px 24px;
 		cursor: pointer;
+		opacity: 0.6;
 		&:hover {
 			color: var(--h-text-color-primary);
 		}

@@ -27,10 +27,14 @@ import { CollapseTransition } from '@/components/Transition';
 defineOptions({
 	name: 'SubMenu',
 });
-defineProps({
+const props = defineProps({
 	level: {
 		type: Number,
 		required: true,
+	},
+	disabled: {
+		type: Boolean,
+		default: false,
 	},
 });
 const { prefixCls } = useAppStyleSettings('menu');
@@ -45,6 +49,7 @@ const getSubMenuItemCls = computed(() => {
 			[`${prefixCls}-opened`]: state.value.opened,
 			[`${prefixCls}-item-active`]: state.value.active,
 			[`${prefixCls}-subitem-active`]: state.value.active,
+			[`${prefixCls}-submenu-disabled`]: props.disabled,
 		},
 	];
 });
@@ -60,6 +65,9 @@ const comonentColorProp = computed(() => {
 const { props: parentMenuProps } = inject(`NormalMenu`) as MenuProvider;
 const isAccordion = computed(() => parentMenuProps.accordion);
 const handleClick = () => {
+	if (props.disabled) {
+		return;
+	}
 	const curOpened = state.value.opened;
 	// 如果是手风琴效果，则需要将其他子菜单折叠起来
 	if (isAccordion.value) {

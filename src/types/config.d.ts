@@ -11,5 +11,6 @@ export interface MenuData {
 	name: string;
 	path: string;
 	icon?: string;
+	disabled?: boolean;
 	children?: MenuData[];
 }

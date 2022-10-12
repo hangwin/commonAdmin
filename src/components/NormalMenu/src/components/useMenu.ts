@@ -13,7 +13,6 @@ const findParentByComponent = (
 	}
 	let parent = instance.parent;
 	while (parent) {
-		console.log('findParentByComponent', parent);
 		if (!name.includes(parent.type.name as string)) {
 			parent = parent.parent;
 		}
@@ -26,9 +25,11 @@ export const useMenuItem = (instance: ComponentInternalInstance | null) => {
 		if (!instance) {
 			return {};
 		}
+		const rootMenu = getParentMenu();
+		const indentSize = (rootMenu?.props.indentSize || 16) as number;
 		const level = (instance.props.level as number) || 0;
 		return {
-			paddingLeft: level * 16 + 'px',
+			paddingLeft: level * indentSize + 'px',
 		};
 	});
 	const getParentMenu = () => {
