@@ -92,14 +92,14 @@ onMounted(() => {
 		cursor: pointer;
 		&:hover,
 		&:active {
-			color: inherit;
+			color: var(--h-text-color-primary);
 		}
 	}
 	.@{menu-item-cls} > i {
 		margin-right: 6px;
 	}
 	&-item-disabled {
-		color: var(--h-text-color-primary);
+		color: var(--h-text-color-disabled);
 	}
 	&-vertical &-item,
 	&-vertical &-submenu-title {
@@ -108,7 +108,7 @@ onMounted(() => {
 		cursor: pointer;
 		opacity: 0.6;
 		&:hover {
-			color: var(--h-text-color-primary);
+			color: @light-primary;
 		}
 	}
 	&-vertical &-submenu-title-icon {

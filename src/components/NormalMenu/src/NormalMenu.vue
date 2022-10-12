@@ -30,7 +30,6 @@ const menuData = [
 				name: '菜单1-2',
 				icon: 'icon1-2',
 				path: 'menu1-2',
-				disabled: true,
 				children: [
 					{
 						name: '菜单1-2-1',
