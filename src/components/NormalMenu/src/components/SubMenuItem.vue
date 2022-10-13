@@ -1,19 +1,27 @@
 <template>
 	<li :class="getSubMenuItemCls">
-		<div :class="`${prefixCls}-submenu-title`" :style="getItemStyle" @click.stop="handleClick">
-			<slot name="title"></slot>
-			<svg-icon
-				name="arrow-down"
-				size="16"
-				:class="`${prefixCls}-submenu-title-icon`"
-				:color="comonentColorProp.iconColor"
-			/>
-		</div>
-		<CollapseTransition>
-			<ul v-show="state.opened" :class="prefixCls">
-				<slot></slot>
-			</ul>
-		</CollapseTransition>
+		<!-- 非折叠状态，展示完整的菜单 -->
+		<template v-if="!isCollapse">
+			<div
+				:class="`${prefixCls}-submenu-title`"
+				:style="getItemStyle"
+				@click.stop="handleClick"
+			>
+				<slot name="title"></slot>
+				<svg-icon
+					name="arrow-down"
+					size="16"
+					:class="`${prefixCls}-submenu-title-icon`"
+					:color="comonentColorProp.iconColor"
+				/>
+			</div>
+			<CollapseTransition>
+				<ul v-show="state.opened" :class="prefixCls">
+					<slot></slot>
+				</ul>
+			</CollapseTransition>
+		</template>
+		<!-- 折叠状态，只展示图标 -->
 	</li>
 </template>
 <script lang="ts" setup>
@@ -55,7 +63,6 @@ const getSubMenuItemCls = computed(() => {
 });
 const instance = getCurrentInstance();
 const { getItemStyle, getParentList } = useMenuItem(instance);
-console.log(getCurrentInstance()?.props);
 const appStore = useAppStore();
 const comonentColorProp = computed(() => {
 	return {
@@ -64,6 +71,7 @@ const comonentColorProp = computed(() => {
 });
 const { props: parentMenuProps } = inject(`NormalMenu`) as MenuProvider;
 const isAccordion = computed(() => parentMenuProps.accordion);
+const isCollapse = computed(() => parentMenuProps.collapse);
 const handleClick = () => {
 	if (props.disabled) {
 		return;

@@ -8,6 +8,9 @@ import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
 import { computed, getCurrentInstance, onMounted, provide, ref } from 'vue';
 import { MenuProvider } from './types';
 import { menuEmitter } from './useMenu';
+defineOptions({
+	name: 'Menu',
+});
 const props = defineProps({
 	// 子菜单缩进大小
 	indentSize: {
@@ -23,12 +26,24 @@ const props = defineProps({
 		type: String,
 		default: 'light',
 	},
+	// 是否折叠状态
+	collapse: {
+		type: Boolean,
+		default: true,
+	},
 });
 const emit = defineEmits(['select']);
 // common-menu
 const { prefixCls } = useAppStyleSettings('menu');
 const getMenuCls = computed(() => {
-	return [prefixCls, `${prefixCls}-vertical`, `${prefixCls}-${props.theme}`];
+	return [
+		prefixCls,
+		`${prefixCls}-vertical`,
+		`${prefixCls}-${props.theme}`,
+		{
+			[`${prefixCls}-collapse`]: props.collapse,
+		},
+	];
 });
 const instance = getCurrentInstance();
 const currentActivePath = ref('');

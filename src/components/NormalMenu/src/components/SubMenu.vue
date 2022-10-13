@@ -27,6 +27,7 @@ const props = defineProps({
 		type: Number,
 		required: true,
 	},
+	collapse: Boolean,
 });
 const hasChildren = computed(() => {
 	return props.item.children && props.item.children.length > 0;

@@ -15,6 +15,8 @@ const findParentByComponent = (
 	while (parent) {
 		if (!name.includes(parent.type.name as string)) {
 			parent = parent.parent;
+		} else {
+			return parent;
 		}
 	}
 	return parent;
@@ -55,10 +57,14 @@ export const useMenuItem = (instance: ComponentInternalInstance | null) => {
 			list: ret,
 		};
 	};
+	const getParent = () => {
+		return findParentByComponent(['SubMenu', 'Menu'], instance);
+	};
 	return {
 		getItemStyle,
 		getParentMenu,
 		getParentList,
+		getParent,
 	};
 };
 
