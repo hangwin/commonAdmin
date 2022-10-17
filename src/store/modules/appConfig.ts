@@ -6,14 +6,28 @@ import type { ThemeType } from '@/types/theme';
 import type { ColorVariables } from '@/theme/colors/colorVariable';
 import { ThemeMode } from '@/constants/uiConfigConstants';
 
+export interface MenuSetting {
+	collapsed: boolean;
+}
+interface AppConfig {
+	theme: {
+		mode: ThemeMode;
+		primary: string;
+		colorVariables: ReturnType<typeof getColorVariables2>;
+	};
+	menuSetting: MenuSetting;
+}
 // 应用相关的配置，如主题，布局等
 export const useAppStore = defineStore('appConfig', {
-	state: () => {
+	state: (): AppConfig => {
 		return {
 			theme: {
 				mode: ThemeMode.LIGHT,
 				primary: baseColor.primary,
 				colorVariables: getColorVariables2(),
+			},
+			menuSetting: {
+				collapsed: false,
 			},
 		};
 	},
@@ -32,13 +46,19 @@ export const useAppStore = defineStore('appConfig', {
 		setColorVariables(colorVariables: ColorVariables) {
 			this.theme.colorVariables = colorVariables;
 		},
+		setMenuSetting(setting: Partial<MenuSetting>) {
+			this.menuSetting = { ...this.menuSetting, ...setting };
+		},
 	},
 	getters: {
 		getThemeColors(state) {
 			return state.theme.colorVariables;
 		},
+		getMenuSetting(state) {
+			return state.menuSetting;
+		},
 	},
 	persist: {
-		paths: ['theme'],
+		paths: ['theme', 'appConfig'],
 	},
 });

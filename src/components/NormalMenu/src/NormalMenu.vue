@@ -1,5 +1,5 @@
 <template>
-	<Menu :accordion="true">
+	<Menu :accordion="true" :collapse="collapsed">
 		<template v-for="item in menuData" :key="item.path">
 			<SubMenu :item="item" :level="1"></SubMenu>
 		</template>
@@ -8,41 +8,47 @@
 <script lang="ts" setup>
 import Menu from './components/Menu.vue';
 import SubMenu from './components/SubMenu.vue';
-const menuData = [
-	{
-		name: '菜单1',
-		icon: 'icon1',
-		path: 'menu1',
-		children: [
-			{
-				name: '菜单1-1',
-				icon: 'icon1-1',
-				path: 'menu1-1',
-				children: [
-					{
-						name: '菜单1-1-1',
-						icon: 'icon1-1-1',
-						path: 'menu1-1-1',
-					},
-				],
-			},
-			{
-				name: '菜单1-2',
-				icon: 'icon1-2',
-				path: 'menu1-2',
-				children: [
-					{
-						name: '菜单1-2-1',
-						icon: 'icon1-2-1',
-						path: 'menu1-2-1',
-					},
-				],
-			},
-		],
+defineProps({
+	collapsed: {
+		type: Boolean,
+		default: false,
 	},
+});
+const menuData = [
+	// {
+	// 	name: '菜单1',
+	// 	icon: 'icon1',
+	// 	path: 'menu1',
+	// 	children: [
+	// 		{
+	// 			name: '菜单1-1',
+	// 			icon: 'icon1-1',
+	// 			path: 'menu1-1',
+	// 			children: [
+	// 				{
+	// 					name: '菜单1-1-1',
+	// 					icon: 'icon1-1-1',
+	// 					path: 'menu1-1-1',
+	// 				},
+	// 			],
+	// 		},
+	// 		{
+	// 			name: '菜单1-2',
+	// 			icon: 'icon1-2',
+	// 			path: 'menu1-2',
+	// 			children: [
+	// 				{
+	// 					name: '菜单1-2-1',
+	// 					icon: 'icon1-2-1',
+	// 					path: 'menu1-2-1',
+	// 				},
+	// 			],
+	// 		},
+	// 	],
+	// },
 	{
 		name: '菜单2',
-		icon: 'icon2',
+		icon: 'lang',
 		path: 'menu2',
 	},
 ];

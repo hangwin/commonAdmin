@@ -1,12 +1,16 @@
 <template>
 	<el-container :class="getLayoutCls">
 		<el-container>
-			<el-aside><normal-menu></normal-menu></el-aside>
+			<el-aside :width="getWidth" style="transition: width 0.1s ease-in-out"
+				><normal-menu :collapsed="isCollapse"></normal-menu
+			></el-aside>
 			<el-container>
 				<el-header>头部</el-header>
-				<el-main
-					>主要内容区<div>{{ userStore.token }}</div></el-main
-				>
+				<el-main>
+					主要内容区
+					<div>{{ userStore.token }}</div>
+					<button @click="menuSetting.toggleCollapse">toggle</button>
+				</el-main>
 				<el-footer>脚部</el-footer>
 			</el-container>
 		</el-container>
@@ -18,11 +22,17 @@ import { useUserStore } from '@/store/modules/user';
 import { NormalMenu } from '@/components/NormalMenu';
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
 import { computed } from 'vue';
+import { useMenuSetting } from '@/hooks/settings/useMenuSetting';
 const userStore = useUserStore();
 const { prefixCls } = useAppStyleSettings('layout');
 const getLayoutCls = computed(() => {
 	return [`${prefixCls}`];
 });
+const menuSetting = useMenuSetting();
+const getWidth = computed(() => {
+	return menuSetting.getCollapse.value ? '48px' : '210px';
+});
+const isCollapse = computed(() => menuSetting.getCollapse.value);
 </script>
 <style lang="less">
 @layout-cls: ~'@{namespace}-layout';

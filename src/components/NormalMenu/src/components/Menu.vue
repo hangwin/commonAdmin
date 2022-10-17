@@ -29,7 +29,7 @@ const props = defineProps({
 	// 是否折叠状态
 	collapse: {
 		type: Boolean,
-		default: true,
+		default: false,
 	},
 });
 const emit = defineEmits(['select']);
@@ -125,6 +125,15 @@ onMounted(() => {
 		&:hover {
 			color: @light-primary;
 		}
+		.@{menu-cls}-tooltip {
+			width: calc(100% - 0px);
+			padding: 12px 0;
+			text-align: center;
+		}
+	}
+	&-vertical&-collapse &-item,
+	&-vertical&-collapse &-submenu-title {
+		padding: 0;
 	}
 	&-vertical &-submenu-title-icon {
 		position: absolute;
@@ -149,5 +158,10 @@ onMounted(() => {
 			color: @light-primary;
 		}
 	}
+	// &-light&-vertical&-collapse {
+	// 	> .@{menu-cls}-item-active {
+
+	// 	}
+	// }
 }
 </style>

@@ -1,8 +1,14 @@
 <template>
-	<li :class="getMenuItemClass" :style="getItemStyle" @click.stop="handleMenuItemClick">
+	<li
+		:class="getMenuItemClass"
+		:style="rootMenuProps.collapse ? {} : getItemStyle"
+		@click.stop="handleMenuItemClick"
+	>
 		<ElTooltip v-if="showToolTip" placement="right">
 			<template #content><slot name="title"></slot></template>
-			<div>图标<slot name="title"></slot></div>
+			<div :class="`${prefixCls}-tooltip`">
+				<slot></slot>
+			</div>
 		</ElTooltip>
 		<template v-else>
 			<slot></slot>
