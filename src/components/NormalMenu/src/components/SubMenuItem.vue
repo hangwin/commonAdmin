@@ -22,6 +22,38 @@
 			</CollapseTransition>
 		</template>
 		<!-- 折叠状态，只展示图标 -->
+		<ElPopover
+			v-else
+			:visible="true"
+			:show-arrow="false"
+			:popper-class="`${prefixCls}-popover`"
+			placement="right"
+		>
+			<template #reference>
+				<div :class="getSubMenuPopupCls">
+					<div
+						:class="[
+							{
+								[`${prefixCls}-submenu-popup`]: level === 1,
+							},
+						]"
+					>
+						<slot name="title"></slot>
+						<svg-icon
+							name="arrow-down"
+							size="16"
+							:class="`${prefixCls}-submenu-title-icon`"
+							:color="comonentColorProp.iconColor"
+						/>
+					</div>
+				</div>
+			</template>
+			<div>
+				<ul :class="[prefixCls, `${prefixCls}-popup`, `${prefixCls}-${getTheme}`]">
+					<slot></slot>
+				</ul>
+			</div>
+		</ElPopover>
 	</li>
 </template>
 <script lang="ts" setup>
@@ -32,6 +64,7 @@ import { useMenuItem, menuEmitter } from './useMenu';
 import { useAppStore } from '@/store/modules/appConfig';
 import { MenuProvider } from './types';
 import { CollapseTransition } from '@/components/Transition';
+import { ElPopover } from 'element-plus';
 defineOptions({
 	name: 'SubMenu',
 });
@@ -61,6 +94,14 @@ const getSubMenuItemCls = computed(() => {
 		},
 	];
 });
+const getSubMenuPopupCls = computed(() => {
+	return [
+		`${prefixCls}-submenu-title`,
+		{
+			[`${prefixCls}-submenu-collapse`]: isCollapse.value && props.level === 1,
+		},
+	];
+});
 const instance = getCurrentInstance();
 const { getItemStyle, getParentList } = useMenuItem(instance);
 const appStore = useAppStore();
@@ -72,6 +113,7 @@ const comonentColorProp = computed(() => {
 const { props: parentMenuProps } = inject(`NormalMenu`) as MenuProvider;
 const isAccordion = computed(() => parentMenuProps.accordion);
 const isCollapse = computed(() => parentMenuProps.collapse);
+const getTheme = computed(() => parentMenuProps.theme);
 const handleClick = () => {
 	if (props.disabled) {
 		return;

@@ -1,7 +1,7 @@
 <template>
 	<Menu :accordion="true" :collapse="collapsed">
 		<template v-for="item in menuData" :key="item.path">
-			<SubMenu :item="item" :level="1"></SubMenu>
+			<SubMenu :item="item" :level="1" :collapse="collapsed"></SubMenu>
 		</template>
 	</Menu>
 </template>
@@ -15,37 +15,33 @@ defineProps({
 	},
 });
 const menuData = [
-	// {
-	// 	name: '菜单1',
-	// 	icon: 'icon1',
-	// 	path: 'menu1',
-	// 	children: [
-	// 		{
-	// 			name: '菜单1-1',
-	// 			icon: 'icon1-1',
-	// 			path: 'menu1-1',
-	// 			children: [
-	// 				{
-	// 					name: '菜单1-1-1',
-	// 					icon: 'icon1-1-1',
-	// 					path: 'menu1-1-1',
-	// 				},
-	// 			],
-	// 		},
-	// 		{
-	// 			name: '菜单1-2',
-	// 			icon: 'icon1-2',
-	// 			path: 'menu1-2',
-	// 			children: [
-	// 				{
-	// 					name: '菜单1-2-1',
-	// 					icon: 'icon1-2-1',
-	// 					path: 'menu1-2-1',
-	// 				},
-	// 			],
-	// 		},
-	// 	],
-	// },
+	{
+		name: '菜单1',
+		icon: 'lang',
+		path: 'menu1',
+		children: [
+			{
+				name: '菜单1-1',
+				path: 'menu1-1',
+				children: [
+					{
+						name: '菜单1-1-1',
+						path: 'menu1-1-1',
+					},
+				],
+			},
+			{
+				name: '菜单1-2',
+				path: 'menu1-2',
+				children: [
+					{
+						name: '菜单1-2-1',
+						path: 'menu1-2-1',
+					},
+				],
+			},
+		],
+	},
 	{
 		name: '菜单2',
 		icon: 'lang',
