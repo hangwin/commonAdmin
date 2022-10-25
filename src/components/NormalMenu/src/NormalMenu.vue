@@ -16,10 +16,14 @@ defineProps({
 });
 const menuData = [
 	{
-		name: '菜单1',
+		name: 'dashboard',
 		icon: 'lang',
-		path: 'menu1',
+		path: '/dashboard',
 		children: [
+			{
+				name: 'summary',
+				path: '/dashboard/summary',
+			},
 			{
 				name: '菜单1-1',
 				path: 'menu1-1',

@@ -8,6 +8,7 @@
 				@click.stop="handleClick"
 			>
 				<slot name="title"></slot>
+				{{ '___' + instance?.uid }}
 				<svg-icon
 					name="arrow-down"
 					size="16"
@@ -24,7 +25,6 @@
 		<!-- 折叠状态，只展示图标 -->
 		<ElPopover
 			v-else
-			:visible="true"
 			:show-arrow="false"
 			:popper-class="`${prefixCls}-popover`"
 			placement="right"
@@ -39,6 +39,7 @@
 						]"
 					>
 						<slot name="title"></slot>
+						{{ instance?.uid }}
 						<svg-icon
 							name="arrow-down"
 							size="16"
@@ -59,7 +60,7 @@
 <script lang="ts" setup>
 import { SvgIcon } from '@/components/SvgIcon';
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
-import { computed, getCurrentInstance, inject, onMounted, ref } from 'vue';
+import { computed, getCurrentInstance, inject, onBeforeMount, ref, onBeforeUnmount } from 'vue';
 import { useMenuItem, menuEmitter } from './useMenu';
 import { useAppStore } from '@/store/modules/appConfig';
 import { MenuProvider } from './types';
@@ -132,12 +133,15 @@ const handleClick = () => {
 	}
 	state.value.opened = !curOpened;
 };
-onMounted(() => {
-	menuEmitter.on('update-submenu-active-item', (uidList) => {
-		if (instance?.uid) {
-			state.value.active = (uidList as number[]).includes(instance.uid);
-		}
-	});
+const updateSubmenuActiveItemHandler = (uidList: any) => {
+	console.log('submenu-active', uidList, instance?.uid);
+	if (instance?.uid) {
+		state.value.active = (uidList as number[]).includes(instance.uid);
+	}
+};
+onBeforeMount(() => {
+	console.log(`instance.uid: ${instance?.uid}挂载了`);
+	menuEmitter.on('update-submenu-active-item', updateSubmenuActiveItemHandler);
 	menuEmitter.on('update-opened', (data) => {
 		// 设置了手风琴效果，则打开一个子菜单的时候，其他的子菜单需要关闭，opened用于显示打开状态下的样式
 		if (isAccordion.value) {
@@ -150,5 +154,10 @@ onMounted(() => {
 			return;
 		}
 	});
+});
+onBeforeUnmount(() => {
+	menuEmitter.off('update-submenu-active-item', updateSubmenuActiveItemHandler);
+	// menuEmitter.off('update-opened');
+	console.log(`instance.uid: ${instance?.uid}卸载了`);
 });
 </script>

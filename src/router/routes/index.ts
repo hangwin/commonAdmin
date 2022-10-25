@@ -1,10 +1,11 @@
 import type { RouteRecordRaw } from 'vue-router';
 import { LOGIN, HOME } from '@/constants/routeName';
 import Home from '@/views/home/index.vue';
+import { dashBoardRoute } from './dashboard';
 
 const rootRoute: RouteRecordRaw = {
 	path: '/',
-	redirect: '/home',
+	redirect: '/dashboard',
 };
 
 const homeRoot: RouteRecordRaw = {
@@ -33,4 +34,4 @@ const color: RouteRecordRaw = {
 	},
 };
 
-export const routes = [rootRoute, loginRoute, homeRoot, color];
+export const routes = [rootRoute, loginRoute, homeRoot, color, dashBoardRoute];

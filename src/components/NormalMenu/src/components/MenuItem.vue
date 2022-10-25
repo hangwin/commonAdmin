@@ -53,7 +53,6 @@ const getMenuItemClass = computed(() => {
 const { currentActivePath, props: rootMenuProps } = inject<MenuProvider>('NormalMenu') as any;
 // 在最顶层的子菜单项才需要tooltip
 const showToolTip = computed(() => rootMenuProps.collapse && getParent()?.type.name === 'Menu');
-console.log('showToolTip', rootMenuProps.collapse, getParent()?.type.name);
 const handleMenuItemClick = () => {
 	if (props.disabled) {
 		return;
@@ -72,6 +71,7 @@ watch(
 		if (newPath === props.path) {
 			active.value = true;
 			const { uidList } = getParentList();
+			console.log('update-submenu-active-item', newPath);
 			menuEmitter.emit('update-submenu-active-item', uidList);
 		} else {
 			active.value = false;
