@@ -25,6 +25,10 @@ const menuData = [
 				path: '/dashboard/summary',
 			},
 			{
+				name: 'workbench',
+				path: '/dashboard/workbench',
+			},
+			{
 				name: '菜单1-1',
 				path: 'menu1-1',
 				children: [
