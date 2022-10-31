@@ -19,5 +19,22 @@ export const dashBoardRoute: RouteRecordRaw = {
 			name: DASHBOARD.WORKBENCH,
 			component: () => import('@/views/dashboard/workbench/index.vue'),
 		},
+		{
+			path: 'test',
+			name: 'test',
+			component: () => import('@/views/dashboard/test/index.vue'),
+			children: [
+				{
+					path: 'demo1',
+					name: 'demo1',
+					component: () => import('@/views/dashboard/test/demo1/index.vue'),
+				},
+				{
+					path: 'demo2',
+					name: 'demo2',
+					component: () => import('@/views/dashboard/test/demo2/index.vue'),
+				},
+			],
+		},
 	],
 };

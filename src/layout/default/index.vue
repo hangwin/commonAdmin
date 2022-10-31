@@ -2,7 +2,7 @@
 	<el-container :class="getLayoutCls">
 		<el-container>
 			<el-aside :width="getWidth" style="transition: width 0.1s ease-in-out"
-				><normal-menu :collapsed="isCollapse"></normal-menu
+				><normal-menu :collapse="isCollapse"></normal-menu
 			></el-aside>
 			<el-container>
 				<el-header

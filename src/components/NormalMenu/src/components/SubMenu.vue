@@ -1,15 +1,26 @@
 <template>
 	<!-- 没有子菜单，则直接展示即可 -->
 	<MenuItem v-if="!hasChildren" :level="level" :path="item.path">
-		<svg-icon v-if="getIcon" :name="getIcon" size="16" class="cursor-pointer"></svg-icon>
+		<svg-icon
+			v-if="getIcon"
+			:name="getIcon"
+			size="16"
+			class="common-menu-title-icon cursor-pointer"
+		></svg-icon>
 		<template #title>
 			<span :class="['ml-2', `${prefixCls}-sub-title`]">{{ item.name }}</span>
 		</template>
 	</MenuItem>
 	<!-- 有子菜单，需要递归展示子菜单 -->
-	<SubMenuItem v-if="hasChildren" :level="level" :disabled="item.disabled">
-		<template #title>
-			<svg-icon v-if="getIcon" :name="getIcon" size="16" class="cursor-pointer"></svg-icon>
+	<SubMenuItem v-if="hasChildren" :level="level" :disabled="item.disabled" :path="item.path">
+		<template #title="{ iconProp }">
+			<svg-icon
+				v-if="getIcon"
+				:name="getIcon"
+				size="16"
+				class="common-menu-title-icon cursor-pointer"
+				:color="iconProp.iconColor"
+			></svg-icon>
 			<span v-show="showSubTitle" :class="['ml-2', `${prefixCls}-sub-title`]">{{
 				item.name
 			}}</span>

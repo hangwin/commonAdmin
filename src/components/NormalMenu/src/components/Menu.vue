@@ -5,9 +5,20 @@
 </template>
 <script lang="ts" setup>
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
-import { computed, getCurrentInstance, onMounted, provide, ref } from 'vue';
+import {
+	computed,
+	getCurrentInstance,
+	onMounted,
+	provide,
+	ref,
+	watchEffect,
+	watch,
+	unref,
+	nextTick,
+} from 'vue';
 import { MenuProvider } from './types';
 import { menuEmitter } from './useMenu';
+import { useRoute } from 'vue-router';
 defineOptions({
 	name: 'Menu',
 });
@@ -31,6 +42,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	openItems: {
+		type: Array<string>,
+		default: [],
+	},
 });
 const emit = defineEmits(['select']);
 // common-menu
@@ -47,15 +62,38 @@ const getMenuCls = computed(() => {
 });
 const instance = getCurrentInstance();
 const currentActivePath = ref('');
+const curOpenItems = ref<string[]>([]);
+watchEffect(() => {
+	curOpenItems.value = props.openItems;
+});
 provide<MenuProvider>(`NormalMenu`, {
 	props,
 	currentActivePath,
+	curOpenItems,
 });
+const route = useRoute();
+watch(
+	() => props.collapse,
+	(cur) => {
+		console.log('collapse', cur, route.path);
+		nextTick(() => {
+			menuEmitter.emit('update-opened', route.path);
+		});
+	}
+);
 onMounted(() => {
 	menuEmitter.on('menu-item-select', (path) => {
 		console.log('rootmenu item select', path);
 		currentActivePath.value = path as string;
-		emit('select');
+		emit('select', path);
+	});
+	menuEmitter.on('update-opened', (data: any) => {
+		console.log('rootmenu updateopened', data.uidList);
+		if (props.accordion) {
+			curOpenItems.value = data.uidList;
+		} else {
+			curOpenItems.value = Array.from(new Set(...data.uidList));
+		}
 	});
 });
 </script>
@@ -173,6 +211,9 @@ onMounted(() => {
 		opacity: 0.6;
 		&:hover {
 			color: @light-primary;
+			.@{menu-cls}-submenu-title-icon, .@{menu-cls}-title-icon {
+				fill: @light-primary !important;
+			}
 		}
 		.@{menu-cls}-tooltip {
 			width: calc(100% - 0px);
@@ -208,6 +249,32 @@ onMounted(() => {
 		}
 		&-active.@{menu-cls}-submenu{
 			color: @light-primary;
+		}
+		&-active {
+			.@{menu-cls}-submenu-title-icon, .@{menu-cls}-title-icon {
+				fill: @light-primary !important;
+			}
+		}
+	}
+	&-light&-vertical&-collapse {
+		.@{menu-cls}-item-active {
+			position: relative;
+			/* stylelint-disable-next-line function-no-unknown */
+			background-color: fade(@light-primary, 10);
+			// 这里清除掉上面的after
+			&::after {
+				display: none;
+			}
+			&::before {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				display: block;
+				width: 2px;
+				background-color: var(--h-primary);
+				content: '';
+			}
 		}
 	}
 	// &-light&-vertical&-collapse {

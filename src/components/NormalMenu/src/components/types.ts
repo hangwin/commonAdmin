@@ -10,4 +10,5 @@ export interface ComponentProps {
 export interface MenuProvider {
 	props: ComponentProps;
 	currentActivePath?: Ref<string>;
+	curOpenItems?: Ref<string[]>;
 }

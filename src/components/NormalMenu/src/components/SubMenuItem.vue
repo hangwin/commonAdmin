@@ -7,13 +7,12 @@
 				:style="getItemStyle"
 				@click.stop="handleClick"
 			>
-				<slot name="title"></slot>
-				{{ '___' + instance?.uid }}
+				<slot name="title" :icon-prop="iconProp"></slot>
 				<svg-icon
 					name="arrow-down"
 					size="16"
 					:class="`${prefixCls}-submenu-title-icon`"
-					:color="comonentColorProp.iconColor"
+					:color="iconProp.iconColor"
 				/>
 			</div>
 			<CollapseTransition>
@@ -26,6 +25,7 @@
 		<ElPopover
 			v-else
 			:show-arrow="false"
+			:visible="popoverVisible"
 			:popper-class="`${prefixCls}-popover`"
 			placement="right"
 		>
@@ -38,19 +38,21 @@
 							},
 						]"
 					>
-						<slot name="title"></slot>
-						{{ instance?.uid }}
+						<slot name="title" :icon-prop="iconProp"></slot>
 						<svg-icon
 							name="arrow-down"
 							size="16"
 							:class="`${prefixCls}-submenu-title-icon`"
-							:color="comonentColorProp.iconColor"
+							:color="iconProp.iconColor"
 						/>
 					</div>
 				</div>
 			</template>
 			<div>
-				<ul :class="[prefixCls, `${prefixCls}-popup`, `${prefixCls}-${getTheme}`]">
+				<ul
+					:class="[prefixCls, `${prefixCls}-popup`, `${prefixCls}-${getTheme}`]"
+					v-bind="getEvents()"
+				>
 					<slot></slot>
 				</ul>
 			</div>
@@ -66,6 +68,7 @@ import { useAppStore } from '@/store/modules/appConfig';
 import { MenuProvider } from './types';
 import { CollapseTransition } from '@/components/Transition';
 import { ElPopover } from 'element-plus';
+import { clear } from 'console';
 defineOptions({
 	name: 'SubMenu',
 });
@@ -77,6 +80,10 @@ const props = defineProps({
 	disabled: {
 		type: Boolean,
 		default: false,
+	},
+	path: {
+		type: String,
+		required: true,
 	},
 });
 const { prefixCls } = useAppStyleSettings('menu');
@@ -106,9 +113,11 @@ const getSubMenuPopupCls = computed(() => {
 const instance = getCurrentInstance();
 const { getItemStyle, getParentList } = useMenuItem(instance);
 const appStore = useAppStore();
-const comonentColorProp = computed(() => {
+const iconProp = computed(() => {
 	return {
-		iconColor: appStore.getThemeColors['--h-text-color-disabled'],
+		iconColor: state.value.active
+			? appStore.getThemeColors['--h-primary-hover']
+			: appStore.getThemeColors['--h-text-color-disabled'],
 	};
 });
 const { props: parentMenuProps } = inject(`NormalMenu`) as MenuProvider;
@@ -133,16 +142,42 @@ const handleClick = () => {
 	}
 	state.value.opened = !curOpened;
 };
+const timer = ref<any>(null);
+const handleMouseEnter = () => {
+	if (props.disabled) {
+		return;
+	}
+	clearTimeout(timer.value);
+	setTimeout(() => {
+		console.log('mouseEnter...');
+		menuEmitter.emit('update-popover', {
+			uidList: getParentList().uidList,
+		});
+	}, 100);
+};
+const getEvents = () => {
+	if (!isCollapse.value) {
+		return;
+	}
+	return {
+		onmouseenter: handleMouseEnter,
+	};
+};
 const updateSubmenuActiveItemHandler = (uidList: any) => {
-	console.log('submenu-active', uidList, instance?.uid);
+	console.log('submenu-active', uidList, instance?.uid, state.value.opened);
 	if (instance?.uid) {
 		state.value.active = (uidList as number[]).includes(instance.uid);
 	}
 };
+const popoverVisible = ref(false);
 onBeforeMount(() => {
 	console.log(`instance.uid: ${instance?.uid}挂载了`);
 	menuEmitter.on('update-submenu-active-item', updateSubmenuActiveItemHandler);
 	menuEmitter.on('update-opened', (data) => {
+		if (typeof data === 'string') {
+			state.value.opened = data.includes(props.path);
+			return;
+		}
 		// 设置了手风琴效果，则打开一个子菜单的时候，其他的子菜单需要关闭，opened用于显示打开状态下的样式
 		if (isAccordion.value) {
 			const { opened, parent, uidList } = data as any;
@@ -154,10 +189,18 @@ onBeforeMount(() => {
 			return;
 		}
 	});
+	menuEmitter.on('update-popover', (data) => {
+		const { uidList } = data as any;
+		if (uidList.includes(instance?.uid)) {
+			popoverVisible.value = true;
+		} else {
+			popoverVisible.value = false;
+		}
+	});
 });
 onBeforeUnmount(() => {
 	menuEmitter.off('update-submenu-active-item', updateSubmenuActiveItemHandler);
 	// menuEmitter.off('update-opened');
-	console.log(`instance.uid: ${instance?.uid}卸载了`);
+	// console.log(`instance.uid: ${instance?.uid}卸载了`);
 });
 </script>

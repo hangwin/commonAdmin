@@ -3,14 +3,14 @@ import { computed } from 'vue';
 
 export const useMenuSetting = () => {
 	const appStore = useAppStore();
-	const getCollapse = computed(() => appStore.menuSetting.collapsed || false);
+	const getCollapse = computed(() => appStore.menuSetting.collapse || false);
 
 	const setMenuSetting = (setting: Partial<MenuSetting>) => {
 		appStore.setMenuSetting(setting);
 	};
 	const toggleCollapse = () => {
 		appStore.setMenuSetting({
-			collapsed: !appStore.menuSetting.collapsed,
+			collapse: !appStore.menuSetting.collapse,
 		});
 	};
 	return {

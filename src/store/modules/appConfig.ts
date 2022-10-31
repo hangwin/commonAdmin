@@ -7,7 +7,7 @@ import type { ColorVariables } from '@/theme/colors/colorVariable';
 import { ThemeMode } from '@/constants/uiConfigConstants';
 
 export interface MenuSetting {
-	collapsed: boolean;
+	collapse: boolean;
 }
 interface AppConfig {
 	theme: {
@@ -27,7 +27,7 @@ export const useAppStore = defineStore('appConfig', {
 				colorVariables: getColorVariables2(),
 			},
 			menuSetting: {
-				collapsed: false,
+				collapse: false,
 			},
 		};
 	},

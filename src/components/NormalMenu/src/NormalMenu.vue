@@ -1,15 +1,16 @@
 <template>
-	<Menu :accordion="true" :collapse="collapsed">
+	<Menu :accordion="true" :collapse="collapse" @select="onItemSelect">
 		<template v-for="item in menuData" :key="item.path">
-			<SubMenu :item="item" :level="1" :collapse="collapsed"></SubMenu>
+			<SubMenu :item="item" :level="1" :collapse="collapse"></SubMenu>
 		</template>
 	</Menu>
 </template>
 <script lang="ts" setup>
 import Menu from './components/Menu.vue';
 import SubMenu from './components/SubMenu.vue';
-defineProps({
-	collapsed: {
+import { useRouter } from 'vue-router';
+const props = defineProps({
+	collapse: {
 		type: Boolean,
 		default: false,
 	},
@@ -29,12 +30,16 @@ const menuData = [
 				path: '/dashboard/workbench',
 			},
 			{
-				name: '菜单1-1',
-				path: 'menu1-1',
+				name: 'test',
+				path: '/dashboard/test',
 				children: [
 					{
-						name: '菜单1-1-1',
-						path: 'menu1-1-1',
+						name: 'demo1',
+						path: '/dashboard/test/demo1',
+					},
+					{
+						name: 'demo2',
+						path: '/dashboard/test/demo2',
 					},
 				],
 			},
@@ -53,7 +58,12 @@ const menuData = [
 	{
 		name: '菜单2',
 		icon: 'lang',
-		path: 'menu2',
+		path: '/dashboard/test/demo2',
 	},
 ];
+
+const router = useRouter();
+const onItemSelect = (path: string) => {
+	router.push(path);
+};
 </script>
