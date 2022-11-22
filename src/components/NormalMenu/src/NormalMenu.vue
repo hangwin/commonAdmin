@@ -40,6 +40,12 @@ const menuData = [
 					{
 						name: 'demo2',
 						path: '/dashboard/test/demo2',
+						children: [
+							{
+								name: 'demo3',
+								path: '/dashboard/test/demo2/demo22',
+							},
+						],
 					},
 				],
 			},

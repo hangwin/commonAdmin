@@ -2,6 +2,7 @@
 	<li
 		:class="getMenuItemClass"
 		:style="rootMenuProps.collapse ? {} : getItemStyle"
+		v-bind="getEvents()"
 		@click.stop="handleMenuItemClick"
 	>
 		<ElTooltip v-if="showToolTip" placement="right">
@@ -20,7 +21,7 @@
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
 import { computed, getCurrentInstance, inject, ref, watch } from 'vue';
 import { MenuProvider } from './types';
-import { useMenuItem, menuEmitter } from './useMenu';
+import { useMenuItem, menuEmitter, useMenuPoperMouseEvent } from './useMenu';
 import { ElTooltip } from 'element-plus';
 const { prefixCls } = useAppStyleSettings('menu');
 const props = defineProps({
@@ -39,6 +40,7 @@ const props = defineProps({
 });
 const instance = getCurrentInstance();
 const { getItemStyle, getParentList, getParent } = useMenuItem(instance);
+const { getEvents } = useMenuPoperMouseEvent(instance);
 const active = ref(false);
 const getMenuItemClass = computed(() => {
 	return [

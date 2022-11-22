@@ -30,7 +30,7 @@
 			placement="right"
 		>
 			<template #reference>
-				<div :class="getSubMenuPopupCls">
+				<div :class="getSubMenuPopupCls" v-bind="getEvents()">
 					<div
 						:class="[
 							{
@@ -63,12 +63,11 @@
 import { SvgIcon } from '@/components/SvgIcon';
 import { useAppStyleSettings } from '@/hooks/settings/useAppSetting';
 import { computed, getCurrentInstance, inject, onBeforeMount, ref, onBeforeUnmount } from 'vue';
-import { useMenuItem, menuEmitter } from './useMenu';
+import { useMenuItem, menuEmitter, useMenuPoperMouseEvent } from './useMenu';
 import { useAppStore } from '@/store/modules/appConfig';
 import { MenuProvider } from './types';
 import { CollapseTransition } from '@/components/Transition';
 import { ElPopover } from 'element-plus';
-import { clear } from 'console';
 defineOptions({
 	name: 'SubMenu',
 });
@@ -112,6 +111,7 @@ const getSubMenuPopupCls = computed(() => {
 });
 const instance = getCurrentInstance();
 const { getItemStyle, getParentList } = useMenuItem(instance);
+const { getEvents } = useMenuPoperMouseEvent(instance);
 const appStore = useAppStore();
 const iconProp = computed(() => {
 	return {
@@ -142,36 +142,14 @@ const handleClick = () => {
 	}
 	state.value.opened = !curOpened;
 };
-const timer = ref<any>(null);
-const handleMouseEnter = () => {
-	if (props.disabled) {
-		return;
-	}
-	clearTimeout(timer.value);
-	setTimeout(() => {
-		console.log('mouseEnter...');
-		menuEmitter.emit('update-popover', {
-			uidList: getParentList().uidList,
-		});
-	}, 100);
-};
-const getEvents = () => {
-	if (!isCollapse.value) {
-		return;
-	}
-	return {
-		onmouseenter: handleMouseEnter,
-	};
-};
+
 const updateSubmenuActiveItemHandler = (uidList: any) => {
-	console.log('submenu-active', uidList, instance?.uid, state.value.opened);
 	if (instance?.uid) {
 		state.value.active = (uidList as number[]).includes(instance.uid);
 	}
 };
 const popoverVisible = ref(false);
 onBeforeMount(() => {
-	console.log(`instance.uid: ${instance?.uid}挂载了`);
 	menuEmitter.on('update-submenu-active-item', updateSubmenuActiveItemHandler);
 	menuEmitter.on('update-opened', (data) => {
 		if (typeof data === 'string') {
@@ -190,12 +168,43 @@ onBeforeMount(() => {
 		}
 	});
 	menuEmitter.on('update-popover', (data) => {
-		const { uidList } = data as any;
-		if (uidList.includes(instance?.uid)) {
-			popoverVisible.value = true;
+		const { path, type } = data as any;
+		const pathArr = path.split('');
+		const curPathArr = props.path.split('');
+		// 子item打开的情况下，父item不能消失
+		// 当前的subitem是path这个item的父item，当前这个item就要打开
+		if (pathArr.length > curPathArr.length) {
+			if (path.includes(props.path)) {
+				// if (!isHover) {
+				// 	popoverVisible.value = type === 'leave' ? false : true;
+				// } else {
+				// 	popoverVisible.value = true;
+				// }
+				popoverVisible.value = type === 'leave' ? false : true;
+				console.log('update-popover', path, props.path, popoverVisible.value);
+				return;
+			}
+		} else if (pathArr.length < curPathArr.length) {
+			// 鼠标移进父item，父item的下一级子item需要显示
+			// 当前的subitem是path这个item的直接子item
+			//  则当鼠标进入path这个item时，当前的subitem要打开
+			//  当鼠标移出path这个item时，当前的subitem要消失
+			if (pathArr.length + 1 === curPathArr.length) {
+				if (props.path.includes(path)) {
+					popoverVisible.value = type === 'leave' ? false : true;
+					console.log('update-popover', path, props.path, popoverVisible.value);
+					return;
+				}
+			}
 		} else {
-			popoverVisible.value = false;
+			// 同级item
+			if (props.path === path) {
+				popoverVisible.value = type === 'leave' ? false : true;
+				return;
+			}
 		}
+		popoverVisible.value = false;
+		console.log('update-popover', path, props.path, popoverVisible.value);
 	});
 });
 onBeforeUnmount(() => {
