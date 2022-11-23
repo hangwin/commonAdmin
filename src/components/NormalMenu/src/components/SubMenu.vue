@@ -12,7 +12,13 @@
 		</template>
 	</MenuItem>
 	<!-- 有子菜单，需要递归展示子菜单 -->
-	<SubMenuItem v-if="hasChildren" :level="level" :disabled="item.disabled" :path="item.path">
+	<SubMenuItem
+		v-if="hasChildren"
+		:level="level"
+		:disabled="item.disabled"
+		:path="item.path"
+		:show-collapsed-title="showCollapsedTitle"
+	>
 		<template #title="{ iconProp }">
 			<svg-icon
 				v-if="getIcon"
@@ -24,9 +30,17 @@
 			<span v-show="showSubTitle" :class="['ml-2', `${prefixCls}-sub-title`]">{{
 				item.name
 			}}</span>
+			<!-- 折叠状态且是第一层菜单，且showCollapsedTitle为true才展示title -->
+			<span v-show="showCollapsedTitle && isCollapseParent" class="mt-1 collapse-title">{{
+				item.name
+			}}</span>
 		</template>
 		<template v-for="child in item.children" :key="child.path">
-			<SubMenu :item="child" :level="level + 1"></SubMenu>
+			<SubMenu
+				:item="child"
+				:level="level + 1"
+				:show-collapsed-title="showCollapsedTitle"
+			></SubMenu>
 		</template>
 	</SubMenuItem>
 </template>
@@ -49,6 +63,8 @@ const props = defineProps({
 		required: true,
 	},
 	collapse: Boolean,
+	// 折叠状态下是否展示title,
+	showCollapsedTitle: Boolean,
 });
 const hasChildren = computed(() => {
 	return props.item.children && props.item.children.length > 0;
@@ -56,4 +72,5 @@ const hasChildren = computed(() => {
 const getIcon = computed(() => props.item.icon);
 // 非折叠状态下显示title，或者折叠状态下但是不是第一层的子菜单也展示title
 const showSubTitle = computed(() => !props.collapse || props.level !== 1);
+const isCollapseParent = computed(() => props.collapse && props.level === 1);
 </script>

@@ -35,17 +35,19 @@
 						:class="[
 							{
 								[`${prefixCls}-submenu-popup`]: level === 1,
+								[`${prefixCls}-submenu-collapse-show-title`]: showCollapsedTitle,
 							},
 						]"
 					>
 						<slot name="title" :icon-prop="iconProp"></slot>
-						<svg-icon
-							name="arrow-down"
-							size="16"
-							:class="`${prefixCls}-submenu-title-icon`"
-							:color="iconProp.iconColor"
-						/>
 					</div>
+					<svg-icon
+						v-if="level !== 1"
+						name="arrow-down"
+						size="16"
+						:class="`${prefixCls}-submenu-title-icon`"
+						:color="iconProp.iconColor"
+					/>
 				</div>
 			</template>
 			<div>
@@ -84,6 +86,8 @@ const props = defineProps({
 		type: String,
 		required: true,
 	},
+	// 折叠状态下是否展示title,
+	showCollapsedTitle: Boolean,
 });
 const { prefixCls } = useAppStyleSettings('menu');
 const state = ref({

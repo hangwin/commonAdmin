@@ -201,7 +201,9 @@ onMounted(() => {
 			align-items: center;
 			justify-content: center;
 		}
-
+		&-show-title {
+			flex-direction: column;
+		}
 	}
 	&-vertical &-item,
 	&-vertical &-submenu-title {
@@ -282,5 +284,12 @@ onMounted(() => {
 
 	// 	}
 	// }
+
+	.collapse-title {
+		overflow: hidden;
+		font-size: 12px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
 }
 </style>

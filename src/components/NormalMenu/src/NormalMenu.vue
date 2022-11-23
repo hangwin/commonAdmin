@@ -1,7 +1,12 @@
 <template>
 	<Menu :accordion="true" :collapse="collapse" @select="onItemSelect">
 		<template v-for="item in menuData" :key="item.path">
-			<SubMenu :item="item" :level="1" :collapse="collapse"></SubMenu>
+			<SubMenu
+				:item="item"
+				:level="1"
+				:collapse="collapse"
+				:show-collapsed-title="true"
+			></SubMenu>
 		</template>
 	</Menu>
 </template>
@@ -9,6 +14,9 @@
 import Menu from './components/Menu.vue';
 import SubMenu from './components/SubMenu.vue';
 import { useRouter } from 'vue-router';
+defineOptions({
+	name: 'NormalMenu',
+});
 const props = defineProps({
 	collapse: {
 		type: Boolean,
