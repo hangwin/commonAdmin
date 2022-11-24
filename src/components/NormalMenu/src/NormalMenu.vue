@@ -5,7 +5,7 @@
 				:item="item"
 				:level="1"
 				:collapse="collapse"
-				:show-collapsed-title="true"
+				:show-collapsed-title="showTitle"
 			></SubMenu>
 		</template>
 	</Menu>
@@ -14,6 +14,8 @@
 import Menu from './components/Menu.vue';
 import SubMenu from './components/SubMenu.vue';
 import { useRouter } from 'vue-router';
+import { useMenuSetting } from '@/hooks/settings/useMenuSetting';
+import { computed } from 'vue';
 defineOptions({
 	name: 'NormalMenu',
 });
@@ -75,7 +77,8 @@ const menuData = [
 		path: '/dashboard/test/demo2',
 	},
 ];
-
+const { getIsShowCollapsedTitle } = useMenuSetting();
+const showTitle = computed(() => getIsShowCollapsedTitle.value);
 const router = useRouter();
 const onItemSelect = (path: string) => {
 	router.push(path);

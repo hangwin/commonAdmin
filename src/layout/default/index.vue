@@ -6,8 +6,9 @@
 			></el-aside>
 			<el-container>
 				<el-header
-					>头部<button @click="menuSetting.toggleCollapse">toggle</button></el-header
-				>
+					>头部 <button @click="menuSetting.toggleCollapse">toggle</button>|
+					<button @click="showTitle">collapseShowTitle</button>
+				</el-header>
 				<el-main>
 					<RouterView></RouterView>
 				</el-main>
@@ -29,10 +30,11 @@ const getLayoutCls = computed(() => {
 	return [`${prefixCls}`];
 });
 const menuSetting = useMenuSetting();
-const getWidth = computed(() => {
-	return menuSetting.getCollapse.value ? '48px' : '210px';
-});
 const isCollapse = computed(() => menuSetting.getCollapse.value);
+const getWidth = computed(() => menuSetting.getSiderWidth.value);
+const showTitle = () => {
+	menuSetting.setMenuSetting({ showCollapsedTitle: true });
+};
 </script>
 <style lang="less">
 @layout-cls: ~'@{namespace}-layout';

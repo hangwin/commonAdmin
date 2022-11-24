@@ -5,9 +5,11 @@ import { defineStore } from 'pinia';
 import type { ThemeType } from '@/types/theme';
 import type { ColorVariables } from '@/theme/colors/colorVariable';
 import { ThemeMode } from '@/constants/uiConfigConstants';
+import { deepMerge } from '@/utils';
 
 export interface MenuSetting {
 	collapse: boolean;
+	showCollapsedTitle?: boolean;
 }
 interface AppConfig {
 	theme: {
@@ -28,6 +30,7 @@ export const useAppStore = defineStore('appConfig', {
 			},
 			menuSetting: {
 				collapse: false,
+				showCollapsedTitle: false,
 			},
 		};
 	},
@@ -47,7 +50,7 @@ export const useAppStore = defineStore('appConfig', {
 			this.theme.colorVariables = colorVariables;
 		},
 		setMenuSetting(setting: Partial<MenuSetting>) {
-			this.menuSetting = { ...this.menuSetting, ...setting };
+			this.menuSetting = deepMerge(this.menuSetting, setting);
 		},
 	},
 	getters: {
