@@ -13,7 +13,6 @@ import {
 	ref,
 	watchEffect,
 	watch,
-	unref,
 	nextTick,
 } from 'vue';
 import { MenuProvider } from './types';
@@ -35,7 +34,7 @@ const props = defineProps({
 	},
 	theme: {
 		type: String,
-		default: 'light',
+		default: 'dark',
 	},
 	// 是否折叠状态
 	collapse: {
@@ -60,7 +59,6 @@ const getMenuCls = computed(() => {
 		},
 	];
 });
-const instance = getCurrentInstance();
 const currentActivePath = ref('');
 const curOpenItems = ref<string[]>([]);
 watchEffect(() => {
@@ -103,6 +101,8 @@ onMounted(() => {
 @submenu: ~'@{namespace}-submenu';
 @submenu-title: ~'@{submenu}-title';
 @light-primary: #605bff;
+@dark-primary: #141414;
+@dark-font-color: #8c8c8c;
 // 选中了某个菜单项之后，该菜单项后面有一根亮线提示
 .light-border {
 	&::after {
@@ -123,6 +123,7 @@ onMounted(() => {
 	padding: 0;
 }
 .@{menu-cls}-popover {
+	border: none !important;
 	.@{menu-cls} {
 		&-item,
 		&-submenu-title {
@@ -142,12 +143,54 @@ onMounted(() => {
 				opacity: 0.6;
 				&:hover {
 					color: @light-primary;
+					.@{menu-cls}-submenu-title-icon {
+						stroke: @light-primary !important;
+						stroke-width: 30px;
+					}
 				}
 				&-selected {
 					color: @light-primary;
 					/* stylelint-disable-next-line function-no-unknown */
 					background-color: fade(@light-primary, 10);
 					.light-border();
+				}
+				&-active {
+					.@{menu-cls}-submenu-title{
+						&-icon {
+							stroke: @light-primary !important;
+							stroke-width: 30px;
+						}
+					}
+				}
+			}
+		}
+
+		&-dark {
+			.@{menu-cls}-item,
+			.@{menu-cls}-submenu-title {
+				color: @dark-font-color;
+				&:hover {
+					color: #fff;
+					.@{menu-cls}-submenu-title-icon {
+						// fill: #fff !important;
+						stroke: #fff !important;
+						stroke-width: 30px;
+					}
+				}
+				&-selected {
+					color: #fff;
+					/* stylelint-disable-next-line function-no-unknown */
+					background-color: @light-primary;
+				}
+				&-active {
+					.@{menu-cls}-submenu-title{
+						color: #fff;
+						&-icon {
+							// fill: #fff !important;
+							stroke: #fff !important;
+							stroke-width: 30px;
+						}
+					}
 				}
 			}
 		}
@@ -185,6 +228,17 @@ onMounted(() => {
 			color: var(--h-text-color-primary);
 		}
 	}
+	&-dark {
+		.@{menu-cls}-item-active {
+			color: #fff !important;
+		}
+		.@{menu-item-cls} {
+			&:hover,
+			&:active {
+				color: #fff !important;
+			}
+		}
+	}
 	.@{menu-item-cls} > i {
 		margin-right: 6px;
 	}
@@ -213,7 +267,11 @@ onMounted(() => {
 		opacity: 0.6;
 		&:hover {
 			color: @light-primary;
-			.@{menu-cls}-submenu-title-icon, .@{menu-cls}-title-icon {
+			.@{menu-cls}-submenu-title-icon {
+				stroke: @light-primary !important;
+				stroke-width: 30px;
+			}
+			.@{menu-cls}-title-icon {
 				fill: @light-primary !important;
 			}
 		}
@@ -238,6 +296,8 @@ onMounted(() => {
 	}
 	&-submenu-title-icon {
 		transition: transform 0.3s ease-in-out;
+		stroke: var(--h-text-color-primary);
+		stroke-width: 30px;
 	}
 	&-vertical &-opened > * > &-submenu-title-icon {
 		transform: translateY(-50%) rotate(180deg);
@@ -253,8 +313,14 @@ onMounted(() => {
 			color: @light-primary;
 		}
 		&-active {
-			.@{menu-cls}-submenu-title-icon, .@{menu-cls}-title-icon {
+			.@{menu-cls}-title-icon {
 				fill: @light-primary !important;
+			}
+		}
+		&-active > .@{menu-cls}-submenu-title {
+			.@{menu-cls}-submenu-title-icon {
+				stroke: @light-primary!important;
+				stroke-width: 30px;
 			}
 		}
 	}
@@ -279,11 +345,76 @@ onMounted(() => {
 			}
 		}
 	}
-	// &-light&-vertical&-collapse {
-	// 	> .@{menu-cls}-item-active {
 
-	// 	}
-	// }
+	&-dark&-vertical &-item{
+		color: @dark-font-color;
+		&-active:not(.@{menu-cls}-subitem-active) {
+			color: #fff !important;
+			background-color: @light-primary !important;
+		}
+		&-active.@{menu-cls}-submenu{
+			color: #fff !important;
+		}
+		&-active {
+			.@{menu-cls}-title-icon {
+				fill: #fff !important;
+			}
+		}
+		&-active > .@{menu-cls}-submenu-title {
+			.@{menu-cls}-submenu-title-icon {
+				// fill: #fff !important;
+				stroke: #fff !important;
+				stroke-width: 30px;
+			}
+			color: #fff
+		}
+		&:hover {
+			color: #fff;
+			.@{menu-cls}-submenu-title-icon {
+				stroke: #fff !important;
+				stroke-width: 30px;
+			}
+			.@{menu-cls}-title-icon {
+				fill: #fff !important;
+			}
+
+
+		}
+	}
+	&-dark&-vertical &-submenu-title {
+		color: @dark-font-color;
+		&:hover {
+			color: #fff;
+			.@{menu-cls}-submenu-title-icon {
+				stroke: #fff !important;
+				stroke-width: 30px;
+			}
+			.@{menu-cls}-title-icon {
+				fill: #fff !important;
+			}
+		}
+	}
+	&-dark&-vertical&-collapse {
+		.@{menu-cls}-item-active {
+			position: relative;
+			/* stylelint-disable-next-line function-no-unknown */
+			background-color: #434343;
+			// 这里清除掉上面的after
+			&::after {
+				display: none;
+			}
+			&::before {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				display: block;
+				width: 2px;
+				background-color: var(--h-primary);
+				content: '';
+			}
+		}
+	}
 
 	.collapse-title {
 		overflow: hidden;
@@ -291,5 +422,9 @@ onMounted(() => {
 		white-space: nowrap;
 		text-overflow: ellipsis;
 	}
+}
+.@{menu-cls}-dark.@{menu-cls}__children {
+	background-color: #1a1a1a;
+	opacity: 1 !important;
 }
 </style>

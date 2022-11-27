@@ -1,6 +1,6 @@
 <template>
 	<!-- 没有子菜单，则直接展示即可 -->
-	<MenuItem v-if="!hasChildren" :level="level" :path="item.path">
+	<MenuItem v-if="!hasChildren" :level="level" :path="item.path" :class="getLevelCls">
 		<svg-icon
 			v-if="getIcon"
 			:name="getIcon"
@@ -18,6 +18,7 @@
 		:disabled="item.disabled"
 		:path="item.path"
 		:show-collapsed-title="showCollapsedTitle"
+		:class="getLevelCls"
 	>
 		<template #title="{ iconProp }">
 			<svg-icon
@@ -73,4 +74,8 @@ const getIcon = computed(() => props.item.icon);
 // 非折叠状态下显示title，或者折叠状态下但是不是第一层的子菜单也展示title
 const showSubTitle = computed(() => !props.collapse || props.level !== 1);
 const isCollapseParent = computed(() => props.collapse && props.level === 1);
+// common-menu
+const getLevelCls = computed(() => {
+	return [{ [`${prefixCls}__children`]: props.level !== 1 }];
+});
 </script>

@@ -10,7 +10,7 @@
 				<slot name="title" :icon-prop="iconProp"></slot>
 				<svg-icon
 					name="arrow-down"
-					size="16"
+					size="13"
 					:class="`${prefixCls}-submenu-title-icon`"
 					:color="iconProp.iconColor"
 				/>
@@ -44,7 +44,7 @@
 					<svg-icon
 						v-if="level !== 1"
 						name="arrow-down"
-						size="16"
+						size="13"
 						:class="`${prefixCls}-submenu-title-icon`"
 						:color="iconProp.iconColor"
 					/>
