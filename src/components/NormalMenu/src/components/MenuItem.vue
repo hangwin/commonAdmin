@@ -73,8 +73,8 @@ watch(
 		if (newPath === props.path) {
 			active.value = true;
 			const { uidList } = getParentList();
-			console.log('update-submenu-active-item', newPath);
 			menuEmitter.emit('update-submenu-active-item', uidList);
+			menuEmitter.emit('update-opened', newPath);
 		} else {
 			active.value = false;
 		}

@@ -21,6 +21,7 @@ import { useRoute } from 'vue-router';
 defineOptions({
 	name: 'Menu',
 });
+const route = useRoute();
 const props = defineProps({
 	// 子菜单缩进大小
 	indentSize: {
@@ -34,7 +35,7 @@ const props = defineProps({
 	},
 	theme: {
 		type: String,
-		default: 'dark',
+		default: 'light',
 	},
 	// 是否折叠状态
 	collapse: {
@@ -44,6 +45,10 @@ const props = defineProps({
 	openItems: {
 		type: Array<string>,
 		default: [],
+	},
+	activeItem: {
+		type: String,
+		default: '',
 	},
 });
 const emit = defineEmits(['select']);
@@ -59,7 +64,7 @@ const getMenuCls = computed(() => {
 		},
 	];
 });
-const currentActivePath = ref('');
+const currentActivePath = ref(props.activeItem || route.path);
 const curOpenItems = ref<string[]>([]);
 watchEffect(() => {
 	curOpenItems.value = props.openItems;
@@ -69,7 +74,7 @@ provide<MenuProvider>(`NormalMenu`, {
 	currentActivePath,
 	curOpenItems,
 });
-const route = useRoute();
+
 watch(
 	() => props.collapse,
 	(cur) => {

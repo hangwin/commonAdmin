@@ -163,6 +163,7 @@ onBeforeMount(() => {
 		// 设置了手风琴效果，则打开一个子菜单的时候，其他的子菜单需要关闭，opened用于显示打开状态下的样式
 		if (isAccordion.value) {
 			const { opened, parent, uidList } = data as any;
+			console.log('--->', uidList, instance?.uid, parent === instance?.parent);
 			if (parent === instance?.parent) {
 				state.value.opened = opened;
 			} else if (!uidList.includes(instance?.uid)) {
